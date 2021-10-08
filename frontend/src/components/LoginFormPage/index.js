@@ -12,7 +12,7 @@ function LoginFormPage() {
     const [errors, setErrors] = useState([]);
 
     if (sessionUser) return (
-        <redirect to="/" />
+        <Redirect to="/" />
     );
 
     //prevents refresh, handles errors, tests if authenticated

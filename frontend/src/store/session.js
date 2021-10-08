@@ -17,7 +17,7 @@ const removeUser = () => {
   };
 };
 
-//thunk action
+//thunk action for logging in
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch('/api/session', {
@@ -27,6 +27,14 @@ export const login = (user) => async (dispatch) => {
       password,
     }),
   });
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
+};
+
+//thunk action for restoring a user session
+export const restoreUser = () => async dispatch => {
+  const response = await csrfFetch('/api/session');
   const data = await response.json();
   dispatch(setUser(data.user));
   return response;
