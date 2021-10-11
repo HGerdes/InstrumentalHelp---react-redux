@@ -8,7 +8,17 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT
   }, {});
   Instrument.associate = function(models) {
+    Instrument.belongsTo(models.User, {
+      foreignKey: "userId"
+    });
 
+    Instrument.belongsTo(models.Manufacturer, {
+      foreignKey: "manufacturerId"
+    });
+
+    Instrument.belongsTo(models.InstrumentType, {
+      foreignKey: "typeId"
+    })
   };
   return Instrument;
 };

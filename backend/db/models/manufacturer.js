@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING
   }, {});
   Manufacturer.associate = function(models) {
-    // associations can be defined here
+    Manufacturer.hasMany(models.Instrument, {
+      foreignKey: "manufacturerId"
+    })
   };
   return Manufacturer;
 };

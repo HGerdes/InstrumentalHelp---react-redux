@@ -3,17 +3,22 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
 
-      return queryInterface.bulkInsert('Reviews', [
+      return queryInterface.bulkInsert('InstrumentTypes', [
       {
-        userId: 1,
-        instrumentId: 1,
-        rating: 2,
-        helpful: 0,
-        unhelpful: 0,
-        review: "The best instrument I have ever played.  Would recommend to anyone who wants one.",
+        instrumentType: 'Electric Guitar',
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+      },
+      {
+        instrumentType: 'Bass Guitar',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        instrumentType: 'Synthesizer',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ], {});
 
   },
