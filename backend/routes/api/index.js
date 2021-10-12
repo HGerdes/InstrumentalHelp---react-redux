@@ -3,9 +3,12 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const instrumentRouter = require("./instruments.js")
 const instrumentTypeRouter = require("./instruments.js")
+const manufacturerRouter = require("./instruments.js")
 
 router.use("/instruments", instrumentRouter)
 router.use("/type", instrumentTypeRouter);
+router.use("/manufacturer", manufacturerRouter)
+
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
