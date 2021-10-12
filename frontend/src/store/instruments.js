@@ -1,3 +1,5 @@
+import { csrfFetch } from './csrf';
+
 const LOAD = "instrument/LOAD_ALL_INSTRUMENTS"
 
 const load = getAllInstruments => ({
@@ -8,37 +10,24 @@ const load = getAllInstruments => ({
 //thunk action creater
 export const getInstruments = () => async dispatch => {
     const response = await fetch("/api/instruments");
-
+    console.log(response)
     if (response.ok) {
-        const list = await response.json();
-        dispatch(load(list));
-        return list;
+        const instruments = await response.json();
+        dispatch(load(instruments));
+        return instruments;
     }
 }
 
 
 const initialState = {};
 
-// const sortList = (list) => {
-//     return list.sort((instrumentA, instrumentB) => {
-//       return instrumentA.id - instrumentB.id;
-//     }).map((instrument) => instrument);
-//   };
-
 const instrumentReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case LOAD: {
-            newState = Object.assign({}, state)
-            newState.getAllInstruments = action.getAllInstruments;
-            // action.list.forEach(instrument => {
-            //     allInstruments[instrument.id] = instrument;
-            // });
+        case LOAD: { //load is the action
+            newState = Object.assign({}, state) //assign current state to newState
+            newState.getAllInstruments = action.getAllInstruments; //run getAllInstruments on newState
             return newState;
-                // ...allInstruments,
-                // ...state,
-                // allInstruments: {...allInstruments},
-                // list: sortList(action.list)
         }
         default:
             return state;

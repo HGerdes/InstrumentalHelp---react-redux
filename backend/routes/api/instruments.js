@@ -6,8 +6,7 @@ const router = express.Router();
 
 router.get("/", asyncHandler(async function(req, res) {
     const instruments = await Instrument.findAll();
-    res.json(instruments)
-    console.log(instruments)
+    return res.json(instruments)
 }));
 
 module.exports = router;
