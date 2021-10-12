@@ -5,17 +5,17 @@ module.exports = {
 
       return queryInterface.bulkInsert('InstrumentTypes', [
       {
-        instrumentType: 'Electric Guitar',
+        type: 'Electric Guitar',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        instrumentType: 'Bass Guitar',
+        type: 'Bass Guitar',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        instrumentType: 'Synthesizer',
+        type: 'Synthesizer',
         createdAt: new Date(),
         updatedAt: new Date()
       },

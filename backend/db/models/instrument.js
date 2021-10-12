@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     Instrument.hasMany(models.Review, {
       foreignKey: "instrumentId", onDelete: 'CASCADE', hooks: true
     });
+    
     Instrument.belongsTo(models.User, {
       foreignKey: "userId"
     });

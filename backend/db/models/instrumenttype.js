@@ -1,10 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const InstrumentType = sequelize.define('InstrumentType', {
-    instrumentType: DataTypes.STRING
+    type: DataTypes.STRING
   }, {});
   InstrumentType.associate = function(models) {
-    InstrumentType.belongsTo(models.Instrument,{
+    InstrumentType.hasMany(models.Instrument,{
       foreignkey: "typeId"
     })
   };
