@@ -14,20 +14,24 @@ const InstrumentsPage = () => {
     }, [dispatch])
 
     const instruments = useSelector(state => {
-        return state.instrument.list;
+        return state.instruments.list;
+        //  return state.instruments[instrumentId]
+        // return state.instruments.list.map(instrumentId => state.instruments[instrumentId])
     })
+    console.log(instruments)
 
     return (
-        <div className="instruments-container">
-            {instruments.map((instrument) => {
-                return(
-                <div key={instrument.name} to={`/instrument/${instrument.id}`}>
-                    <div className="instrumentName">{instrument.name}</div>
-                </div>
-                );
-            })}
-        </div>
-    )
+        // <div className="instruments-container">
+        //     {instruments.map((instrument) => {
+        //         return(
+        //         <div key={instrument.name} to={`/instrument/${instrument.id}`}>
+        //             <div className="instrumentName">{instrument.name}</div>
+        //         </div>
+        //         );
+        //     })}
+        // </div>
+     <></>
+        )
 }
 
 export default InstrumentsPage;

@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT
   }, {});
   Instrument.associate = function(models) {
+    Instrument.hasMany(models.Review, {
+      foreignKey: "instrumentId", onDelete: 'CASCADE', hooks: true
+    });
     Instrument.belongsTo(models.User, {
       foreignKey: "userId"
     });

@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     instrumentType: DataTypes.STRING
   }, {});
   InstrumentType.associate = function(models) {
-    InstrumentType.hasMany(models.Instrument,{
-      foreignkey: "instrumentId"
+    InstrumentType.belongsTo(models.Instrument,{
+      foreignkey: "typeId"
     })
   };
   return InstrumentType;
