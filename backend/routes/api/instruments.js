@@ -23,6 +23,7 @@ router.get("/manufacturer", asyncHandler(async function(req, res) {
 
 router.post("/new", requireAuth, restoreUser, asyncHandler(async (req,res) => {
     // const {userId, manufacturerId, typeId, name, description} = req.body;
+    console.log("this is the reqBody: ", req.body)
     const newInstrument = await Instrument.create(req.body);
     res.json(newInstrument)
 }))

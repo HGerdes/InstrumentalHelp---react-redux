@@ -56,7 +56,7 @@ export const getInstrumentManufacturers = () => async dispatch => {
 export const createInstrument = (instrument) => async dispatch => {
     const response = await csrfFetch("/api/instruments/new", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        // headers: {"Content-Type": "application/json"},
         body: JSON.stringify(instrument)
     })
     if (response.ok) {

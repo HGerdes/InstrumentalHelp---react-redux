@@ -21,8 +21,8 @@ const CreateInstrumentForm = () => {
     const history = useHistory();
 
     const [name, setName] = useState("");
-    const [type, setType] = useState(0);
-    const [manufacturer, setManufacturer] = useState(0);
+    const [type, setType] = useState(1);
+    const [manufacturer, setManufacturer] = useState(1);
     const [description, setDescription] = useState("");
     const [errors, setErrors] = useState([]);
 
@@ -33,26 +33,27 @@ const CreateInstrumentForm = () => {
         dispatch(getInstrumentTypes());
     }, [dispatch]);
 
-    useEffect(() => {
-        if (instrumentTypes) {
-            console.log("instrument types: ", instrumentTypes)
-            setType(instrumentTypes);
-        }
-    }, [instrumentTypes, type])
+    // useEffect(() => {
+    //     if (instrumentTypes) {
+    //         console.log("instrument types: ", instrumentTypes)
+    //         setType(instrumentTypes);
+    //     }
+    // }, [instrumentTypes])
 
     useEffect(() => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
 
-    useEffect(() => {
-        if (manufacturerTypes) {
-            console.log("manufacturer types: ", manufacturerTypes)
-            setManufacturer(manufacturerTypes);
-        }
-    }, [manufacturerTypes])
+    // useEffect(() => {
+    //     if (manufacturerTypes) {
+    //         console.log("manufacturer types: ", manufacturerTypes)
+    //         setManufacturer(manufacturerTypes);
+    //     }
+    // }, [manufacturerTypes])
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        console.log("!!!!type: ", type)
 
         const payload = {
             userId,
@@ -63,7 +64,7 @@ const CreateInstrumentForm = () => {
         };
 
         let newInstrument = await dispatch(createInstrument(payload));
-        console.log(newInstrument)
+        console.log("NI: ", newInstrument)
         if (newInstrument) {
             history.push(`/instruments`);
         }
@@ -80,16 +81,16 @@ const CreateInstrumentForm = () => {
                 />
             </div>
             <div>Type of Instrument:
-                <select className="typeSelect" onChange={(e) => setType(e.target.value)} value={type.id}>
+                <select className="typeSelect" onChange={(e) => setType(e.target.value)}>
                     {instrumentTypes?.map(type =>
-                        <option key={type.id}>{type.type}</option>
+                        <option key={type.id} value={type.id}>{type.type}</option>
                     )}
                 </select>
             </div>
             <div>Instrument Manufacturer:
-                <select className="typeSelect"  onChange={(e) => setManufacturer(e.target.value)} value={manufacturer.id}>
+                <select className="typeSelect"  onChange={(e) => setManufacturer(e.target.value)} value={manufacturer}>
                     {manufacturerTypes?.map(manufacturer =>
-                        <option key={manufacturer.id}>{manufacturer.name}</option>
+                        <option key={manufacturer.id} value={manufacturer.id}>{manufacturer.name}</option>
                     )}
                 </select>
             </div>
