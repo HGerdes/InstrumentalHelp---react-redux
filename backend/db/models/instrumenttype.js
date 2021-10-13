@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   InstrumentType.associate = function(models) {
     InstrumentType.hasMany(models.Instrument,{
-      foreignkey: "typeId"
+      foreignKey: "typeId"
     })
   };
   return InstrumentType;

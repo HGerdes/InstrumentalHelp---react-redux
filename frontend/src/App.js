@@ -6,6 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Instruments from "./components/InstrumentPage"
+import NewInstrument from "./components/CreateInstrumentPage"
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +26,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path="/instruments">
+          <Route exact path="/instruments">
             <Instruments />
+          </Route>
+          <Route exact path="/instruments/new">
+            <NewInstrument />
           </Route>
         </Switch>
       )}
