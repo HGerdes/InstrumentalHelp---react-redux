@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Instruments from "./components/InstrumentPage"
 import NewInstrument from "./components/CreateInstrumentPage"
+import InstrumentDetailPage from "./components/instrumentDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route exact path="/instruments/new">
             <NewInstrument />
+          </Route>
+          <Route exact path="/instruments/:id">
+            <InstrumentDetailPage />
           </Route>
         </Switch>
       )}

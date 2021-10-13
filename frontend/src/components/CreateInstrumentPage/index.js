@@ -58,16 +58,16 @@ const CreateInstrumentForm = () => {
         const payload = {
             userId,
             name,
-            type,
-            manufacturer,
+            typeId: type,
+            manufacturerId: manufacturer,
             description
         };
 
         let newInstrument = await dispatch(createInstrument(payload));
         console.log("NI: ", newInstrument)
-        if (newInstrument) {
-            history.push(`/instruments`);
-        }
+
+        history.push(`/instruments`);
+
     };
 
     return (

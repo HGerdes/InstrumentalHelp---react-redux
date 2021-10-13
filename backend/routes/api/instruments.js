@@ -21,6 +21,12 @@ router.get("/manufacturer", asyncHandler(async function(req, res) {
     return res.json(manufacturer)
 }));
 
+router.get("/:id", asyncHandler(async function(req, res) {
+    let {id} = req.params
+    const instrument = await Instrument.findByPk(id)
+    res.json(instrument)
+}))
+
 router.post("/new", requireAuth, restoreUser, asyncHandler(async (req,res) => {
     // const {userId, manufacturerId, typeId, name, description} = req.body;
     console.log("this is the reqBody: ", req.body)

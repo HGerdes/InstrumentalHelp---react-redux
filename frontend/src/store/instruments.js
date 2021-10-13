@@ -1,6 +1,7 @@
 import { csrfFetch } from './csrf';
 
 const LOAD = "instrument/LOAD_ALL_INSTRUMENTS";
+const LOAD_ONE_INSTRUMENT = "instrument/LOAD_ONE_INSTRUMENT"
 const ADD_INSTRUMENT = "instrument/ADD_INSTRUMENT";
 const LOAD_TYPES = "instrument/LOAD_TYPES";
 const LOAD_MANUFACTURERS = "instrument/LOAD_MANUFACTURERS"
@@ -9,6 +10,11 @@ const loadAllInstruments = getAllInstruments => ({
     type: LOAD,
     getAllInstruments,
 });
+
+const loadOneInstrument = getInstrumentDetail => ({
+    type: LOAD_ONE_INSTRUMENT,
+    getInstrumentDetail
+})
 
 const addOneInstrument = addInstrument => ({
     type: ADD_INSTRUMENT,
@@ -32,6 +38,16 @@ export const getInstruments = () => async dispatch => {
         const instruments = await response.json();
         dispatch(loadAllInstruments(instruments));
         return instruments;
+    }
+}
+
+export const getInstrumentDetail = (id) => async dispatch => {
+    const response = await fetch(`api/instruments/${id}`);
+
+    if (response.ok) {
+        const instrumentDetail = await response.json();
+        dispatch(loadOneInstrument(instrumentDetail))
+        return instrumentDetail;
     }
 }
 
