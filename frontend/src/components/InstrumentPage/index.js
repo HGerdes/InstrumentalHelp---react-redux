@@ -20,6 +20,8 @@ const InstrumentsPage = () => {
         // return state.instruments.list.map(instrumentId => state.instruments[instrumentId])
     })
 
+    console.log(instruments)
+
     return (
         <div className="instruments-container">
             {instruments?.map(instrument => (

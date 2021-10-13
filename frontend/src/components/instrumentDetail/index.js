@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getInstrumentDetail } from "../../store/instruments"
+import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 
 const InstrumentDetailPage = () => {
     const dispatch = useDispatch();
@@ -10,15 +11,50 @@ const InstrumentDetailPage = () => {
 
     const currentUser = useSelector(state => state.session.user);
 
-    const instrument = useSelector(state => {
+    const instrumentDetail = useSelector(state => {
         return state.instruments.getInstrumentDetail;
     })
 
-    console.log(instrument)
+    const instrumentTypes = useSelector(state => {
+        return state.instruments.getTypes;
+    });
+
+    useEffect(() => {
+        dispatch(getInstrumentTypes());
+    }, [dispatch]);
+
+    const manufacturerTypes = useSelector(state => {
+        return state.instruments.getManufacturers;
+    });
+
+    useEffect(() => {
+        dispatch(getInstrumentManufacturers());
+    }, [dispatch]);
+
+
+    if (instrumentDetail) {
+        const instManufacturer = instrumentDetail.manufacturerId;
+        const manuFact = Object.keys(manufacturerTypes);
+        console.log(manuFact)
+
+    }
+
+
+    console.log("instrumentDetail:   ", instrumentDetail)
+
+    useEffect(() => {
+        dispatch(getInstrumentDetail(uniqueInstrumentId))
+    }, [dispatch])
+
+    const {pathname} = history.location
+    const uniqueInstrumentId = pathname.split("/")[2]
 
     return (
         <div className="Instrument Details">
-            <p>Instrument Name: </p> {instrument.name}
+            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
+            <div className="instrumentManufacturer">Instrument Type: {instrumentDetail?.typeId}</div>
+            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
+            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
         </div>
     )
 }

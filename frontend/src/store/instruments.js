@@ -34,6 +34,7 @@ const loadManufacturers = getManufacturers => ({
 //thunk action creater
 export const getInstruments = () => async dispatch => {
     const response = await fetch("/api/instruments");
+
     if (response.ok) {
         const instruments = await response.json();
         dispatch(loadAllInstruments(instruments));
@@ -42,14 +43,14 @@ export const getInstruments = () => async dispatch => {
 }
 
 export const getInstrumentDetail = (id) => async dispatch => {
-    const response = await fetch(`api/instruments/${id}`);
+    const response = await fetch(`/api/instruments/${id}`);
 
     if (response.ok) {
         const instrumentDetail = await response.json();
         dispatch(loadOneInstrument(instrumentDetail))
-        return instrumentDetail;
     }
 }
+
 
 export const getInstrumentTypes = () => async dispatch => {
     const response = await fetch("/api/instruments/type");
@@ -68,6 +69,7 @@ export const getInstrumentManufacturers = () => async dispatch => {
         dispatch(loadManufacturers(manufacturers))
     }
 }
+
 
 export const createInstrument = (instrument) => async dispatch => {
     const response = await csrfFetch("/api/instruments/new", {
@@ -90,6 +92,13 @@ const instrumentReducer = (state = initialState, action) => {
             newState = Object.assign({}, state) //assign current state to newState
             newState.getAllInstruments = action.getAllInstruments; //run getAllInstruments on newState
             return newState;
+        }
+
+        case LOAD_ONE_INSTRUMENT: {
+            return {
+                ...state,
+                getInstrumentDetail: action.getInstrumentDetail
+            }
         }
 
         case LOAD_TYPES: {
