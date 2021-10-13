@@ -1,5 +1,6 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const { requireAuth, restoreUser } = require("../../utils/auth")
 const {Instrument, InstrumentType, Manufacturer} = require("../../db/models")
 
 
@@ -19,5 +20,11 @@ router.get("/manufacturer", asyncHandler(async function(req, res) {
     const manufacturer = await Manufacturer.findAll();
     return res.json(manufacturer)
 }));
+
+router.post("/new", requireAuth, restoreUser, asyncHandler(async (req,res) => {
+    // const {userId, manufacturerId, typeId, name, description} = req.body;
+    const newInstrument = await Instrument.create(req.body);
+    res.json(newInstrument)
+}))
 
 module.exports = router;

@@ -7,6 +7,7 @@ import { createInstrument } from "../../store/instruments";
 
 const CreateInstrumentForm = () => {
     const currentUser = useSelector((state) => state.session.user);
+    const userId = currentUser.id;
 
     const instrumentTypes = useSelector(state => {
         return state.instruments.getTypes;
@@ -20,8 +21,8 @@ const CreateInstrumentForm = () => {
     const history = useHistory();
 
     const [name, setName] = useState("");
-    const [type, setType] = useState("");
-    const [manufacturer, setManufacturer] = useState("");
+    const [type, setType] = useState(0);
+    const [manufacturer, setManufacturer] = useState(0);
     const [description, setDescription] = useState("");
     const [errors, setErrors] = useState([]);
 
@@ -33,8 +34,9 @@ const CreateInstrumentForm = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (instrumentTypes && !type) {
-            setType(instrumentTypes[0]);
+        if (instrumentTypes) {
+            console.log("instrument types: ", instrumentTypes)
+            setType(instrumentTypes);
         }
     }, [instrumentTypes, type])
 
@@ -43,15 +45,17 @@ const CreateInstrumentForm = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (manufacturerTypes && !type) {
-            setManufacturer(manufacturerTypes[0]);
+        if (manufacturerTypes) {
+            console.log("manufacturer types: ", manufacturerTypes)
+            setManufacturer(manufacturerTypes);
         }
-    }, [manufacturerTypes, type])
+    }, [manufacturerTypes])
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
         const payload = {
+            userId,
             name,
             type,
             manufacturer,
@@ -59,7 +63,7 @@ const CreateInstrumentForm = () => {
         };
 
         let newInstrument = await dispatch(createInstrument(payload));
-
+        console.log(newInstrument)
         if (newInstrument) {
             history.push(`/instruments`);
         }
@@ -67,27 +71,38 @@ const CreateInstrumentForm = () => {
 
     return (
         <form className="newInstrumentForm" onSubmit={onSubmit}>
-            <input
-                type="name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-            <select className="typeSelect" onChange={updateType}>
-                {instrumentTypes?.map(type =>
-                    <option key={type.id}>{type.type}</option>
-                )}
-            </select>
-            <select className="typeSelect" onChange={updateManufacturer}>
-                {manufacturerTypes?.map(manufacturer =>
-                    <option key={manufacturer.id}>{manufacturer.name}</option>
-                )}
-            </select>
-
-
-
+            <div>Name of Instrument:
+                <input
+                    type="name"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
+            <div>Type of Instrument:
+                <select className="typeSelect" onChange={(e) => setType(e.target.value)} value={type.id}>
+                    {instrumentTypes?.map(type =>
+                        <option key={type.id}>{type.type}</option>
+                    )}
+                </select>
+            </div>
+            <div>Instrument Manufacturer:
+                <select className="typeSelect"  onChange={(e) => setManufacturer(e.target.value)} value={manufacturer.id}>
+                    {manufacturerTypes?.map(manufacturer =>
+                        <option key={manufacturer.id}>{manufacturer.name}</option>
+                    )}
+                </select>
+            </div>
+            <div>Describe the instrument:
+                <textarea
+                    name="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
+            <button type="submit">Submit New Instrument</button>
         </form>
-    )
+    );
 }
 
 export default CreateInstrumentForm

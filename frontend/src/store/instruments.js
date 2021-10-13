@@ -54,7 +54,7 @@ export const getInstrumentManufacturers = () => async dispatch => {
 }
 
 export const createInstrument = (instrument) => async dispatch => {
-    const response = await fetch(`/api/instruments`, {
+    const response = await csrfFetch("/api/instruments/new", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(instrument)
@@ -87,6 +87,13 @@ const instrumentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 getManufacturers: action.getManufacturers
+            }
+        }
+
+        case ADD_INSTRUMENT: {
+            return {
+                ...state,
+                addInstrument: action.addInstrument
             }
         }
         default:
