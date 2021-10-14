@@ -5,9 +5,21 @@ const {Review} = require("../../db/models")
 
 const router = express.Router();
 
-router.get("/", asyncHandler(async function(req, res) {
+router.get("/", restoreUser, asyncHandler(async function(req, res) {
     const reviews = await Review.findAll();
     return res.json(reviews)
+}))
+
+router.get(":instrumentId", restoreUser, asyncHandler(async function(req, res) {
+    let {instrumentId} = req.params;
+
+    const reviews = await Review.findAll({
+        where: {
+            instrumentId: instrumentId
+        }
+    })
+
+    res.json(reviews)
 }))
 
 module.exports = router;
