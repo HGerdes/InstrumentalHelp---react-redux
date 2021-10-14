@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, NavLink } from 'react-router-dom';
 import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 
@@ -31,16 +31,20 @@ const InstrumentDetailPage = () => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
 
-
+    let manufact;
+    let type;
+    let showEditForm;
     if (instrumentDetail) {
-        const instManufacturer = instrumentDetail.manufacturerId;
-        const manuFact = Object.keys(manufacturerTypes);
-        console.log(manuFact)
+        const instManufacturer = (instrumentDetail.manufacturerId) - 1;
+        manufact = manufacturerTypes[instManufacturer].name;
 
+        const instType = (instrumentDetail.typeId) - 1;
+        type = instrumentTypes[instType].type;
+
+        if (currentUser && (currentUser.id === instrumentDetail.userId)) {
+            showEditForm = true;
+        }
     }
-
-
-    console.log("instrumentDetail:   ", instrumentDetail)
 
     useEffect(() => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
@@ -52,9 +56,22 @@ const InstrumentDetailPage = () => {
     return (
         <div className="Instrument Details">
             <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
-            <div className="instrumentManufacturer">Instrument Type: {instrumentDetail?.typeId}</div>
-            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
-            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
+            <div className="instrumentManufacturer">Instrument Manufacturer: {manufact}</div>
+            <div className="instrumentType">Instrument Type: {type}</div>
+            <div className="instrumentName">Instrument Description: {instrumentDetail?.description}</div>
+            <div className="editFormButton">
+                {(showEditForm) && (
+                    <div className="buttons">
+                        <NavLink to={`/instruments/${uniqueInstrumentId}/edit`}>
+                            <button type="button">edit</button>
+                        </NavLink>
+
+                        <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
+                            <button>delete</button>
+                        </NavLink>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }

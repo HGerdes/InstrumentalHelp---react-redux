@@ -1,10 +1,12 @@
 import { csrfFetch } from './csrf';
 
 const LOAD = "instrument/LOAD_ALL_INSTRUMENTS";
-const LOAD_ONE_INSTRUMENT = "instrument/LOAD_ONE_INSTRUMENT"
+const LOAD_ONE_INSTRUMENT = "instrument/LOAD_ONE_INSTRUMENT";
 const ADD_INSTRUMENT = "instrument/ADD_INSTRUMENT";
+const EDIT_INSTRUMENT = "instrument/EDIT_INSTRUMENT";
 const LOAD_TYPES = "instrument/LOAD_TYPES";
-const LOAD_MANUFACTURERS = "instrument/LOAD_MANUFACTURERS"
+const LOAD_MANUFACTURERS = "instrument/LOAD_MANUFACTURERS";
+const DELETE_INSTRUMENT = "instrument/DELETE_INSTRUMENT";
 
 const loadAllInstruments = getAllInstruments => ({
     type: LOAD,
@@ -21,6 +23,12 @@ const addOneInstrument = addInstrument => ({
     addInstrument,
 });
 
+const editInstrument = editInstrument => ({
+    type: EDIT_INSTRUMENT,
+    editInstrument,
+});
+
+
 const loadTypes = getTypes => ({
     type: LOAD_TYPES,
     getTypes,
@@ -30,6 +38,12 @@ const loadManufacturers = getManufacturers => ({
     type: LOAD_MANUFACTURERS,
     getManufacturers,
 })
+
+const removeInstrument = deleteInstrument => ({
+    type: DELETE_INSTRUMENT,
+    deleteInstrument,
+});
+
 
 //thunk action creater
 export const getInstruments = () => async dispatch => {
@@ -51,7 +65,6 @@ export const getInstrumentDetail = (id) => async dispatch => {
     }
 }
 
-
 export const getInstrumentTypes = () => async dispatch => {
     const response = await fetch("/api/instruments/type");
 
@@ -70,16 +83,42 @@ export const getInstrumentManufacturers = () => async dispatch => {
     }
 }
 
-
 export const createInstrument = (instrument) => async dispatch => {
     const response = await csrfFetch("/api/instruments/new", {
         method: "POST",
         // headers: {"Content-Type": "application/json"},
         body: JSON.stringify(instrument)
     })
+
     if (response.ok) {
         const data = await response.json();
         dispatch(addOneInstrument(data))
+    }
+}
+
+export const editSingleInstrument = (instrument) => async dispatch => {
+    console.log("instrument:   ", instrument)
+    const response = await csrfFetch(`/api/instruments/${instrument.id}/edit`, {
+        method: "PATCH",
+        body: JSON.stringify(instrument)
+
+    });
+    console.log("response:   ", response)
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(editInstrument(data))
+        return data;
+    }
+}
+
+export const deleteInstrument = (id) => async dispatch => {
+    const response = await csrfFetch(`/api/instruments/${id}/delete`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(removeInstrument(data));
     }
 }
 
@@ -119,6 +158,22 @@ const instrumentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 addInstrument: action.addInstrument
+            }
+        }
+
+        case EDIT_INSTRUMENT: {
+            // newState = {...state};
+            // const editInstrument = newState.find((instrument) => instrument.id === action.editInstrument.id)
+            return {
+                ...state,
+                editInstrument: action.editInstrument
+            }
+        }
+
+        case DELETE_INSTRUMENT: {
+            return {
+                ...state,
+                deleteInstrument: action.deleteInstrument
             }
         }
         default:

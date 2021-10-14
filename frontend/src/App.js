@@ -8,6 +8,8 @@ import Navigation from "./components/Navigation";
 import Instruments from "./components/InstrumentPage"
 import NewInstrument from "./components/CreateInstrumentPage"
 import InstrumentDetailPage from "./components/instrumentDetail";
+import EditInstrumentForm from "./components/EditInstrumentPage";
+import DeleteInstrument from "./components/DeleteInstrumentPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +37,12 @@ function App() {
           </Route>
           <Route exact path="/instruments/:id">
             <InstrumentDetailPage />
+          </Route>
+          <Route exact path="/instruments/:id/edit">
+            <EditInstrumentForm />
+          </Route>
+          <Route exact path="/instruments/:id/delete">
+            <DeleteInstrument />
           </Route>
         </Switch>
       )}

@@ -24,14 +24,36 @@ router.get("/manufacturer", asyncHandler(async function(req, res) {
 router.get("/:id", asyncHandler(async function(req, res) {
     let {id} = req.params
     const instrument = await Instrument.findByPk(id)
-    res.json(instrument)
-}))
+    return res.json(instrument)
+}));
 
-router.post("/new", requireAuth, restoreUser, asyncHandler(async (req,res) => {
+router.post("/new", requireAuth, restoreUser, asyncHandler(async (req, res) => {
     // const {userId, manufacturerId, typeId, name, description} = req.body;
-    console.log("this is the reqBody: ", req.body)
     const newInstrument = await Instrument.create(req.body);
-    res.json(newInstrument)
-}))
+    return res.json(newInstrument);
+}));
+
+// router.get("/:id/edit", requireAuth, restoreUser, asyncHandler(async(req, res) => {
+//     let {id} = req.params
+//     const editInstrument = await Instrument.findByPk(id)
+//     return res.json(editInstrument);
+// }));
+
+router.patch("/:id/edit", requireAuth, restoreUser, asyncHandler(async(req, res) => {
+    let {id} = req.params
+    const instrumentEdit = await Instrument.findByPk(id)
+    const instrument = req.body;
+    console.log("reqbody===============", req.body)
+    await instrumentEdit.update(instrument);
+    return res.json(instrumentEdit)
+}));
+
+router.delete("/:id/delete", requireAuth, restoreUser, asyncHandler(async (req, res) => {
+    let { id } = req.params;
+    const instrument = await Instrument.findByPk(id);
+    await instrument.destroy();
+
+    res.json(instrument)
+}));
 
 module.exports = router;

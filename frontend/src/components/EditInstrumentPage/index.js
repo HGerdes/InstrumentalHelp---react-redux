@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
-import { createInstrument } from "../../store/instruments";
+import { editSingleInstrument } from "../../store/instruments";
+import { useParams} from "react-router-dom";
 
-
-const CreateInstrumentForm = () => {
+const EditInstrumentForm = () => {
     const currentUser = useSelector((state) => state.session.user);
     const userId = currentUser.id;
+    const history = useHistory();
+    // const {id} = useParams();
+
+    const {pathname} = history.location;
+    const id = pathname.split("/")[2];
 
     const instrumentTypes = useSelector(state => {
         return state.instruments.getTypes;
@@ -18,7 +23,6 @@ const CreateInstrumentForm = () => {
     });
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const [name, setName] = useState("");
     const [type, setType] = useState(1);
@@ -26,49 +30,31 @@ const CreateInstrumentForm = () => {
     const [description, setDescription] = useState("");
     const [errors, setErrors] = useState([]);
 
-    const updateType = (e) => setType(e.target.value);
-    const updateManufacturer = (e) => setManufacturer(e.target.value)
-
     useEffect(() => {
         dispatch(getInstrumentTypes());
     }, [dispatch]);
-
-    // useEffect(() => {
-    //     if (instrumentTypes) {
-    //         console.log("instrument types: ", instrumentTypes)
-    //         setType(instrumentTypes);
-    //     }
-    // }, [instrumentTypes])
 
     useEffect(() => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
 
-    // useEffect(() => {
-    //     if (manufacturerTypes) {
-    //         console.log("manufacturer types: ", manufacturerTypes)
-    //         setManufacturer(manufacturerTypes);
-    //     }
-    // }, [manufacturerTypes])
-
     const onSubmit = async (e) => {
         e.preventDefault();
 
         const payload = {
-            userId,
+            id,
             name,
             typeId: type,
             manufacturerId: manufacturer,
             description
         };
 
-        let newInstrument = await dispatch(createInstrument(payload));
+        let newInstrument = await dispatch(editSingleInstrument(payload));
         history.push(`/instruments`);
-
     };
 
     return (
-        <form className="newInstrumentForm" onSubmit={onSubmit}>
+        <form className="editInstrumentForm" onSubmit={onSubmit}>
             <div>Name of Instrument:
                 <input
                     type="name"
@@ -85,7 +71,7 @@ const CreateInstrumentForm = () => {
                 </select>
             </div>
             <div>Instrument Manufacturer:
-                <select className="typeSelect"  onChange={(e) => setManufacturer(e.target.value)} value={manufacturer}>
+                <select className="typeSelect" onChange={(e) => setManufacturer(e.target.value)} value={manufacturer}>
                     {manufacturerTypes?.map(manufacturer =>
                         <option key={manufacturer.id} value={manufacturer.id}>{manufacturer.name}</option>
                     )}
@@ -98,9 +84,9 @@ const CreateInstrumentForm = () => {
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <button type="submit">Submit New Instrument</button>
+            <button type="submit">Submit Edited Instrument</button>
         </form>
     );
 }
 
-export default CreateInstrumentForm
+export default EditInstrumentForm
