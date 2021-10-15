@@ -10,7 +10,6 @@ router.get("/", restoreUser, asyncHandler(async function(req, res) {
     return res.json(reviews)
 }));
 
-router.get()
 
 router.get("/:instrumentId", restoreUser, asyncHandler(async function(req, res) {
     let {instrumentId} = req.params;
@@ -27,6 +26,14 @@ router.get("/:instrumentId", restoreUser, asyncHandler(async function(req, res) 
 router.post("/:id/new", requireAuth, restoreUser, asyncHandler(async (req, res) => {
     const newReview = await Review.create(req.body);
     return res.json(newReview);
+}));
+
+router.delete("/:id", requireAuth, restoreUser, asyncHandler(async (req, res) => {
+    let {id} = req.params;
+    const review = await Review.findByPk(id);
+    review.destroy();
+
+    return res.json(review)
 }));
 
 module.exports = router;

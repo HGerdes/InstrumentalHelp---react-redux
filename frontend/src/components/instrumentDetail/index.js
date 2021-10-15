@@ -4,6 +4,7 @@ import { useHistory, useParams, NavLink } from 'react-router-dom';
 import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 import { getReviewsForInstrument } from "../../store/reviews";
+import { deleteReview } from '../../store/reviews';
 
 const InstrumentDetailPage = () => {
     const dispatch = useDispatch();
@@ -48,10 +49,10 @@ const InstrumentDetailPage = () => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
 
-    const deleteReview = (id) => {
-        const deleteReview = dispatch(deleteReview(id))
+    const deleteButton = (id) => {
+        const removeReview = dispatch(deleteReview(id))
 
-        if (deleteReview) {
+        if (removeReview) {
             window.location.reload();
         }
     }
@@ -106,7 +107,7 @@ const InstrumentDetailPage = () => {
                         <div className="reviewText">{review.review}
                             <button>edit</button>
                             {review.userId === userId ? (
-                                <button onClick={() => deleteReview(review.id)}>delete</button>
+                                <button onClick={() => deleteButton(review.id)}>delete</button>
                             ) : null}
                         </div>
                     </div>

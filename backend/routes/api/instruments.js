@@ -53,7 +53,7 @@ router.delete("/:id/delete", requireAuth, restoreUser, asyncHandler(async (req, 
     const instrument = await Instrument.findByPk(id);
     await instrument.destroy();
 
-    res.json(instrument)
+    return res.json(instrument)
 }));
 
 module.exports = router;
