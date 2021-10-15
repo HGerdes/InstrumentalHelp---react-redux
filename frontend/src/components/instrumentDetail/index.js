@@ -25,8 +25,6 @@ const InstrumentDetailPage = () => {
         return state.reviews.getAllReviews
     })
 
-    console.log("reviews     : ", reviews)
-
     useEffect(() => {
         dispatch(getReviewsForInstrument(uniqueInstrumentId))
     }, [dispatch])
@@ -38,8 +36,6 @@ const InstrumentDetailPage = () => {
     const instrumentTypes = useSelector(state => {
         return state.instruments.getTypes;
     });
-
-    console.log("instrument types    :", instrumentTypes)
 
     useEffect(() => {
         dispatch(getInstrumentTypes());
@@ -65,11 +61,16 @@ const InstrumentDetailPage = () => {
     let type;
     let showEditForm;
     if (instrumentDetail) {
-        const instManufacturer = (instrumentDetail.manufacturerId) - 1;
-        manufact = manufacturerTypes[instManufacturer].name;
 
-        const instType = (instrumentDetail.typeId) - 1;
-        type = instrumentTypes[instType].type;
+        if (manufacturerTypes) {
+            const instManufacturer = (instrumentDetail.manufacturerId) - 1;
+            manufact = manufacturerTypes[instManufacturer].name;
+        }
+        
+        if (instrumentTypes) {
+            const instType = (instrumentDetail.typeId) - 1;
+            type = instrumentTypes[instType].type;
+        }
 
         if (currentUser && (currentUser.id === instrumentDetail.userId)) {
             showEditForm = true;

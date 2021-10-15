@@ -6,7 +6,7 @@ import { editSingleReview } from "../../store/reviews";
 const EditReviewForm = () => {
     const currentUser = useSelector((state) => state.session.user);
     let userId;
-    
+
     if (currentUser) {
         userId = currentUser.id;
     }
@@ -17,7 +17,7 @@ const EditReviewForm = () => {
     const id = parseInt(pathname.split("/")[2]);
 
     const [rating, setRating] = useState(1);
-    const [review, setReview] = useState("");
+    const [review, setReview] = useState();
     const [errors, setErrors] = useState([]);
 
     const onSubmit = async (e) => {
@@ -40,6 +40,7 @@ const EditReviewForm = () => {
         <form className="newReviewForm" onSubmit={onSubmit}>
             <div className="reviewTextContainer"> Write your review:
                 <textarea
+                    type="review"
                     name="review"
                     value={review}
                     onChange={(e) => setReview(e.target.value)}
