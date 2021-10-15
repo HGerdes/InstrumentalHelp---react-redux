@@ -3,13 +3,28 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams, NavLink } from 'react-router-dom';
 import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
+import { getReviewsForInstrument } from "../../store/reviews";
 
 const InstrumentDetailPage = () => {
     const dispatch = useDispatch();
     const {instrumentId} = useParams();
     const history = useHistory();
 
+    const {pathname} = history.location
+    const uniqueInstrumentId = pathname.split("/")[2]
+
     const currentUser = useSelector(state => state.session.user);
+    const userId = currentUser.id;
+
+    const reviews = useSelector(state => {
+        return state.reviews.getAllReviews
+    })
+
+    console.log("reviews     : ", reviews)
+
+    useEffect(() => {
+        dispatch(getReviewsForInstrument(uniqueInstrumentId))
+    }, [dispatch])
 
     const instrumentDetail = useSelector(state => {
         return state.instruments.getInstrumentDetail;
@@ -18,6 +33,8 @@ const InstrumentDetailPage = () => {
     const instrumentTypes = useSelector(state => {
         return state.instruments.getTypes;
     });
+
+    console.log("instrument types    :", instrumentTypes)
 
     useEffect(() => {
         dispatch(getInstrumentTypes());
@@ -30,6 +47,14 @@ const InstrumentDetailPage = () => {
     useEffect(() => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
+
+    const deleteReview = (id) => {
+        const deleteReview = dispatch(deleteReview(id))
+
+        if (deleteReview) {
+            window.location.reload();
+        }
+    }
 
     let manufact;
     let type;
@@ -50,8 +75,7 @@ const InstrumentDetailPage = () => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
     }, [dispatch])
 
-    const {pathname} = history.location
-    const uniqueInstrumentId = pathname.split("/")[2]
+
 
     return (
         <div className="Instrument Details">
@@ -63,14 +87,30 @@ const InstrumentDetailPage = () => {
                 {(showEditForm) && (
                     <div className="buttons">
                         <NavLink to={`/instruments/${uniqueInstrumentId}/edit`}>
-                            <button type="button">edit</button>
+                            <button>edit</button>
                         </NavLink>
 
                         <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
                             <button>delete</button>
                         </NavLink>
+
+                        <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
+                            <button>review</button>
+                        </NavLink>
                     </div>
                 )}
+            </div>
+            <div className="reviews">
+                {reviews?.map((review => (
+                    <div key={review.id} className="review">
+                        <div className="reviewText">{review.review}
+                            <button>edit</button>
+                            {review.userId === userId ? (
+                                <button onClick={() => deleteReview(review.id)}>delete</button>
+                            ) : null}
+                        </div>
+                    </div>
+                )))}
             </div>
         </div>
     )

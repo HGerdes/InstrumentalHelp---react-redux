@@ -122,6 +122,8 @@ export const deleteInstrument = (id) => async dispatch => {
     }
 }
 
+
+
 const initialState = {};
 
 const instrumentReducer = (state = initialState, action) => {
