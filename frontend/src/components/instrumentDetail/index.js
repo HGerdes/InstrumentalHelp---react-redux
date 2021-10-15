@@ -15,7 +15,11 @@ const InstrumentDetailPage = () => {
     const uniqueInstrumentId = pathname.split("/")[2]
 
     const currentUser = useSelector(state => state.session.user);
-    const userId = currentUser.id;
+
+    let userId;
+    if (currentUser) {
+        userId = currentUser.id;
+    }
 
     const reviews = useSelector(state => {
         return state.reviews.getAllReviews
@@ -106,7 +110,7 @@ const InstrumentDetailPage = () => {
                 {reviews?.map((review => (
                     <div key={review.id} className="review">
                         <div className="reviewContainer">{review.review}
-                            <div className="reviewRating">{review.rating} </div>
+                            <div className="reviewRating">Rating: {review.rating} out of 5 </div>
                             <div className="reviewText">
                                 <NavLink to={`/reviews/${review.id}/edit`}>
                                     <button>edit</button>

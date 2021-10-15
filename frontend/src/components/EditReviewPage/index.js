@@ -5,7 +5,12 @@ import { editSingleReview } from "../../store/reviews";
 
 const EditReviewForm = () => {
     const currentUser = useSelector((state) => state.session.user);
-    const userId = currentUser.id;
+    let userId;
+    
+    if (currentUser) {
+        userId = currentUser.id;
+    }
+
     const history = useHistory();
     const dispatch = useDispatch();
     const {pathname} = history.location;

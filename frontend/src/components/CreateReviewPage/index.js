@@ -5,7 +5,12 @@ import { createReview } from "../../store/reviews";
 
 const CreateReviewForm = () => {
     const currentUser = useSelector((state) => state.session.user);
-    const userId = currentUser.id;
+    let userId;
+
+    if (currentUser) {
+        userId = currentUser.id;
+    }
+
     const dispatch = useDispatch();
     const history = useHistory();
     const {pathname} = history.location;
