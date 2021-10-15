@@ -8,9 +8,9 @@ const router = express.Router();
 router.get("/", restoreUser, asyncHandler(async function(req, res) {
     const reviews = await Review.findAll();
     return res.json(reviews)
-}))
+}));
 
-router.get(":instrumentId", restoreUser, asyncHandler(async function(req, res) {
+router.get("/:instrumentId", restoreUser, asyncHandler(async function(req, res) {
     let {instrumentId} = req.params;
 
     const reviews = await Review.findAll({
@@ -19,7 +19,14 @@ router.get(":instrumentId", restoreUser, asyncHandler(async function(req, res) {
         }
     })
 
-    res.json(reviews)
-}))
+    console.log("backend reviews :::::::::::::::", reviews)
+
+    return res.json(reviews)
+}));
+
+router.post("/reviews/new", requireAuth, restoreUser, asyncHandler(async (req, res) => {
+    const newReview = await Review.create(req.body);
+    return res.json(newReview);
+}));
 
 module.exports = router;
