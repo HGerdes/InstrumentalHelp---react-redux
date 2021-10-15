@@ -12,6 +12,7 @@ import EditInstrumentForm from "./components/EditInstrumentPage";
 import DeleteInstrument from "./components/DeleteInstrumentPage";
 import CreateReviewForm from "./components/CreateReviewPage";
 import SingleReviewPage from "./components/SingleReviewPage";
+import EditReviewForm from "./components/EditReviewPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route exact path="/reviews/:id/new">
             <CreateReviewForm />
+          </Route>
+          <Route exact path="/reviews/:id/edit">
+            <EditReviewForm />
           </Route>
           <Route exact path="/reviews/:id">
             <SingleReviewPage />

@@ -28,6 +28,14 @@ router.post("/:id/new", requireAuth, restoreUser, asyncHandler(async (req, res) 
     return res.json(newReview);
 }));
 
+router.patch("/:id/edit", requireAuth, restoreUser, asyncHandler(async (req, res) => {
+    let {id} = req.params
+    const reviewEdit = await Review.findByPk(id);
+    const review = req.body;
+    await reviewEdit.update(review);
+    return res.json(reviewEdit)
+}));
+
 router.delete("/:id", requireAuth, restoreUser, asyncHandler(async (req, res) => {
     let {id} = req.params;
     const review = await Review.findByPk(id);

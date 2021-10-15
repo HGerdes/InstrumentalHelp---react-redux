@@ -94,18 +94,21 @@ const InstrumentDetailPage = () => {
                         <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
                             <button>delete</button>
                         </NavLink>
-
-                        <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
-                            <button>review</button>
-                        </NavLink>
                     </div>
                 )}
+            </div>
+            <div className="reviewButton">
+                <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
+                    <button>review</button>
+                </NavLink>
             </div>
             <div className="reviews">
                 {reviews?.map((review => (
                     <div key={review.id} className="review">
                         <div className="reviewText">{review.review}
-                            <button>edit</button>
+                            <NavLink to={`/reviews/${review.id}/edit`}>
+                                <button>edit</button>
+                            </NavLink>
                             {review.userId === userId ? (
                                 <button onClick={() => deleteButton(review.id)}>delete</button>
                             ) : null}
