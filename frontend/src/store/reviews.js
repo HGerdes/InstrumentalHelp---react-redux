@@ -65,7 +65,7 @@ export const createReview = (review, id) => async dispatch => {
 }
 
 export const getSingleReview = (id) => async dispatch => {
-    const response = await fetch(`/api/reviews/${id}`)
+    const response = await fetch(`/api/reviews/${id}/edit`)
     if (response.ok) {
         const data = await response.json();
         dispatch(loadOneReview(data))

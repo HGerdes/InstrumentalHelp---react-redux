@@ -23,8 +23,8 @@ router.get("/:instrumentId", restoreUser, asyncHandler(async function(req, res) 
     return res.json(reviews)
 }));
 
-router.get("/:id", restoreUser, asyncHandler(async function(req, res) {
-    console.log("ID:::::::::::::", id)
+router.get("/:id/edit", requireAuth, asyncHandler(async function(req, res) {
+    let {id} = req.params;
     const review = await Review.findByPk(id);
     return res.json(review)
 }));

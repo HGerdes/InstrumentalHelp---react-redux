@@ -45,8 +45,6 @@ const InstrumentDetailPage = () => {
         return state.instruments.getManufacturers;
     });
 
-    console.log("!!!!!!!!!!!!!!!!!mantype", manufacturerTypes)
-
     useEffect(() => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
@@ -82,8 +80,6 @@ const InstrumentDetailPage = () => {
     useEffect(() => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
     }, [dispatch])
-
-
 
     return (
         <div className="Instrument Details">
