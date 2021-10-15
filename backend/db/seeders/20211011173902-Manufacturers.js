@@ -5,7 +5,7 @@ module.exports = {
 
       return queryInterface.bulkInsert('Manufacturers', [
       {
-        name: "Ibanaez",
+        name: "Ibanez",
         description: "Electric guitar manufacturer founded in 1743 by George 'The Fountain' Ibanez",
         createdAt: new Date(),
         updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         name: "Korg",
-        description: "Korg makes synthesizers like in Jump by Van Halen",
+        description: "Korg makes synthesizers like you may have heard in Jump by Van Halen.",
         createdAt: new Date(),
         updatedAt: new Date()
       },
