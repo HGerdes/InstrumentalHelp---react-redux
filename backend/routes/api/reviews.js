@@ -23,6 +23,12 @@ router.get("/:instrumentId", restoreUser, asyncHandler(async function(req, res) 
     return res.json(reviews)
 }));
 
+router.get("/:id", restoreUser, asyncHandler(async function(req, res) {
+    console.log("ID:::::::::::::", id)
+    const review = await Review.findByPk(id);
+    return res.json(review)
+}));
+
 router.post("/:id/new", requireAuth, restoreUser, asyncHandler(async (req, res) => {
     const newReview = await Review.create(req.body);
     return res.json(newReview);

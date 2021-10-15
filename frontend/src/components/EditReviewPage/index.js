@@ -2,19 +2,33 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { editSingleReview } from "../../store/reviews";
+import { getSingleReview } from "../../store/reviews";
+import { useParams } from "react-router-dom";
 
 const EditReviewForm = () => {
+    const {reviewContent} = useParams();
+    const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
-    let userId;
+    const history = useHistory();
+    const {pathname} = history.location;
+    const id = parseInt(pathname.split("/")[2]);
+    console.log("pathname...:::::", id)
 
+
+    let userId;
     if (currentUser) {
         userId = currentUser.id;
     }
 
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const {pathname} = history.location;
-    const id = parseInt(pathname.split("/")[2]);
+    const reviewData = useSelector(state => {
+        return state.reviews.loadOneReview
+    })
+
+    useEffect(() => {
+        dispatch(getSingleReview(id));
+    },[dispatch])
+
+    console.log("reviewData::::::::::", reviewData)
 
     const [rating, setRating] = useState(1);
     const [review, setReview] = useState();

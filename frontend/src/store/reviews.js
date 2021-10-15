@@ -11,6 +11,11 @@ const loadAllReviews = getAllReviews => ({
     getAllReviews
 })
 
+const loadOneReview = loadOneReview => ({
+    type: LOAD_ONE_REVIEW,
+    loadOneReview
+})
+
 const addOneReview = addReview => ({
     type: ADD_REVIEW,
     addReview
@@ -26,8 +31,6 @@ const editReview = editReview => ({
     editReview
 })
 
-
-
 export const getReviews = () => async dispatch => {
     const response = await fetch("/api/reviews")
 
@@ -40,7 +43,6 @@ export const getReviews = () => async dispatch => {
 
 export const getReviewsForInstrument = (id) => async (dispatch) => {
     const response = await fetch(`/api/reviews/${id}`);
-    console.log("this is the response: ",response);
 
     if (response.ok) {
         const data = await response.json();
@@ -50,17 +52,26 @@ export const getReviewsForInstrument = (id) => async (dispatch) => {
 }
 
 export const createReview = (review, id) => async dispatch => {
-    console.log("review:::::: and id::::::", review, id)
     const response = await csrfFetch(`/api/reviews/${id}/new`, {
         method: "POST",
         body: JSON.stringify(review)
     })
 
-    console.log("review:     :::", response)
-
     if (response.ok) {
         const data = await response.json();
         dispatch(addOneReview(data))
+        return data
+    }
+}
+
+export const getSingleReview = (id) => async dispatch => {
+    const response = await fetch(`/api/reviews/${id}`)
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(loadOneReview(data))
+    console.log("::::::::response::::::", data)
+
+        return data;
     }
 }
 
@@ -96,6 +107,13 @@ const reviewReducer = (state = initialState, action) => {
             newState = Object.assign({}, state) //assign current state to newState
             newState.getAllReviews = action.getAllReviews; //run getAllInstruments on newState
             return newState;
+        }
+
+        case LOAD_ONE_REVIEW: {
+            return {
+                ...state,
+                loadOneReview: action.loadOneReview
+            }
         }
 
         case ADD_REVIEW: {

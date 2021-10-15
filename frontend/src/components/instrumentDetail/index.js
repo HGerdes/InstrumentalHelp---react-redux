@@ -45,6 +45,8 @@ const InstrumentDetailPage = () => {
         return state.instruments.getManufacturers;
     });
 
+    console.log("!!!!!!!!!!!!!!!!!mantype", manufacturerTypes)
+
     useEffect(() => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
@@ -66,7 +68,7 @@ const InstrumentDetailPage = () => {
             const instManufacturer = (instrumentDetail.manufacturerId) - 1;
             manufact = manufacturerTypes[instManufacturer].name;
         }
-        
+
         if (instrumentTypes) {
             const instType = (instrumentDetail.typeId) - 1;
             type = instrumentTypes[instType].type;
