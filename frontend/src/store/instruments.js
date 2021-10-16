@@ -28,7 +28,6 @@ const editInstrument = editInstrument => ({
     editInstrument,
 });
 
-
 const loadTypes = getTypes => ({
     type: LOAD_TYPES,
     getTypes,
@@ -71,6 +70,7 @@ export const getInstrumentTypes = () => async dispatch => {
     if (response.ok) {
         const types = await response.json();
         dispatch(loadTypes(types))
+        return types;
     }
 }
 
@@ -80,6 +80,7 @@ export const getInstrumentManufacturers = () => async dispatch => {
     if (response.ok) {
         const manufacturers = await response.json();
         dispatch(loadManufacturers(manufacturers))
+        return manufacturers;
     }
 }
 
