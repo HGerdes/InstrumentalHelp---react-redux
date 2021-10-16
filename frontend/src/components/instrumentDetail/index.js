@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams, NavLink } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 import { getReviewsForInstrument } from "../../store/reviews";
 import { deleteReview } from '../../store/reviews';
+import InstrumentsPage from '../InstrumentPage/Instruments';
 
 const InstrumentDetailPage = () => {
     const dispatch = useDispatch();
-    const {instrumentId} = useParams();
     const history = useHistory();
 
     const {pathname} = history.location
@@ -27,7 +27,7 @@ const InstrumentDetailPage = () => {
 
     useEffect(() => {
         dispatch(getReviewsForInstrument(uniqueInstrumentId))
-    }, [dispatch])
+    }, [dispatch, uniqueInstrumentId])
 
     const instrumentDetail = useSelector(state => {
         return state.instruments.getInstrumentDetail;
@@ -79,7 +79,18 @@ const InstrumentDetailPage = () => {
 
     useEffect(() => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
-    }, [dispatch])
+    }, [dispatch, uniqueInstrumentId])
+
+    let ratingArr = [];
+    // console.log(ratingArr)
+    // console.log(ratingArr[1])
+    // let sum;
+    // for (let i = 0; i < ratingArr.length; i++) {
+    //     sum = sum + ratingArr[i];
+    // }
+
+    // let avg = sum / 5;
+    // console.log(avg)
 
     return (
         <div className="Instrument Details">
@@ -93,7 +104,6 @@ const InstrumentDetailPage = () => {
                         <NavLink to={`/instruments/${uniqueInstrumentId}/edit`}>
                             <button>edit</button>
                         </NavLink>
-
                         <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
                             <button>delete</button>
                         </NavLink>
@@ -108,6 +118,7 @@ const InstrumentDetailPage = () => {
             <div className="reviews">
                 {reviews?.map((review => (
                     <div key={review.id} className="review">
+                        <div className="arrPush" hidden={true}>{ratingArr.push(review.rating)}</div>
                         <div className="reviewContainer">{review.review}
                             <div className="reviewRating">Rating: {review.rating} out of 5 </div>
                             <div className="reviewText">

@@ -6,31 +6,19 @@ import { getSingleReview } from "../../store/reviews";
 import { useParams } from "react-router-dom";
 
 const EditReviewForm = () => {
-    const {reviewContent} = useParams();
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
     const history = useHistory();
     const {pathname} = history.location;
     const id = parseInt(pathname.split("/")[2]);
-    console.log("pathname...:::::", id)
-
-    let reText;
-    let reRating;
 
     const reviewData = useSelector(state => {
         return state.reviews.loadOneReview
     })
 
-    // if (reviewData) {
-    //     reText = reviewData.review;
-    //     reRating = reviewData.rating;
-    // } else {
-    //     reText = "no good";
-    //     reRating = 1;
-    // }
-
-    const [rating, setRating] = useState(reviewData?.review || "");
-    const [review, setReview] = useState();
+    // const [rating, setRating] = useState(reviewData?.review || "");
+    const [rating, setRating] = useState(1);
+    const [review, setReview] = useState("");
     const [errors, setErrors] = useState([]);
 
 
@@ -54,7 +42,7 @@ const EditReviewForm = () => {
             unhelpful: 0,
             review
         };
-
+        console.log(payload)
         let editedReview = await dispatch(editSingleReview(payload, id));
         history.push(`/instruments/${editedReview.instrumentId}`)
     }

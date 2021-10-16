@@ -24,32 +24,39 @@ const CreateInstrumentForm = () => {
     const [type, setType] = useState(1);
     const [manufacturer, setManufacturer] = useState(1);
     const [description, setDescription] = useState("");
+    const [imageSrc, setImageSrc] = useState("");
     const [errors, setErrors] = useState([]);
-
-    const updateType = (e) => setType(e.target.value);
-    const updateManufacturer = (e) => setManufacturer(e.target.value)
 
     useEffect(() => {
         dispatch(getInstrumentTypes());
     }, [dispatch]);
 
-    // useEffect(() => {
-    //     if (instrumentTypes) {
-    //         console.log("instrument types: ", instrumentTypes)
-    //         setType(instrumentTypes);
-    //     }
-    // }, [instrumentTypes])
 
     useEffect(() => {
         dispatch(getInstrumentManufacturers());
     }, [dispatch]);
 
-    // useEffect(() => {
-    //     if (manufacturerTypes) {
-    //         console.log("manufacturer types: ", manufacturerTypes)
-    //         setManufacturer(manufacturerTypes);
-    //     }
-    // }, [manufacturerTypes])
+    useEffect(() => {
+        const errors = [];
+
+        const imageTypes = ["png", "jpg", "jpeg", "gif"];
+        const imageType = imageSrc.split(".");
+        const imageExt = imageType[imageType.length-1];
+
+        if (name.length < 1 || name.length > 50) {
+            errors.push("The name of the instrument needs to be more than one letter and less than 50 letters")
+        }
+
+        if (description.length === 0) {
+            errors.push("Enter a description")
+        }
+
+        if (!imageTypes.includes(imageExt)) {
+            errors.push("Must be valid image (png, jpg, jpeg, gif")
+        }
+
+        setErrors(errors)
+    },[name, imageSrc])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -59,7 +66,8 @@ const CreateInstrumentForm = () => {
             name,
             typeId: type,
             manufacturerId: manufacturer,
-            description
+            description,
+            imageSrc
         };
 
         let newInstrument = await dispatch(createInstrument(payload));
@@ -69,6 +77,11 @@ const CreateInstrumentForm = () => {
 
     return (
         <form className="newInstrumentForm" onSubmit={onSubmit}>
+            <ul className="errors">
+                {errors.map(error => (
+                    <li key={error}>{error}</li>
+                ))}
+            </ul>
             <div>Name of Instrument:
                 <input
                     type="name"
@@ -96,6 +109,14 @@ const CreateInstrumentForm = () => {
                     name="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                />
+            </div>
+            <div> Image Source:
+                <input
+                    type={"imageSrc"}
+                    name={"imageSrc"}
+                    value={imageSrc}
+                    onChange={(e) => setImageSrc(e.target.value)}
                 />
             </div>
             <button type="submit">Submit New Instrument</button>
