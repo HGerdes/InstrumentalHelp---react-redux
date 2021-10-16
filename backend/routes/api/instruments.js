@@ -2,12 +2,17 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { requireAuth, restoreUser } = require("../../utils/auth")
 const {Instrument, InstrumentType, Manufacturer} = require("../../db/models")
-
+const {Review} = require("../../db/models")
 
 const router = express.Router();
 
 router.get("/", asyncHandler(async function(req, res) {
-    const instruments = await Instrument.findAll();
+    const instruments = await Instrument.findAll({
+        include: Review
+    }
+);
+
+
     return res.json(instruments)
 }));
 
