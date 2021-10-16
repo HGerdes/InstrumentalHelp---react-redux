@@ -14,25 +14,34 @@ const EditReviewForm = () => {
     const id = parseInt(pathname.split("/")[2]);
     console.log("pathname...:::::", id)
 
-
-    let userId;
-    if (currentUser) {
-        userId = currentUser.id;
-    }
+    let reText;
+    let reRating;
 
     const reviewData = useSelector(state => {
         return state.reviews.loadOneReview
     })
 
+    // if (reviewData) {
+    //     reText = reviewData.review;
+    //     reRating = reviewData.rating;
+    // } else {
+    //     reText = "no good";
+    //     reRating = 1;
+    // }
+
+    const [rating, setRating] = useState(reviewData?.review || "");
+    const [review, setReview] = useState();
+    const [errors, setErrors] = useState([]);
+
+
     useEffect(() => {
         dispatch(getSingleReview(id));
     },[dispatch])
 
-    console.log("reviewData::::::::::", reviewData)
-
-    const [rating, setRating] = useState(1);
-    const [review, setReview] = useState();
-    const [errors, setErrors] = useState([]);
+    let userId;
+    if (currentUser) {
+        userId = currentUser.id;
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -50,28 +59,32 @@ const EditReviewForm = () => {
         history.push(`/instruments/${editedReview.instrumentId}`)
     }
 
-    return (
-        <form className="newReviewForm" onSubmit={onSubmit}>
-            <div className="reviewTextContainer"> Write your review:
-                <textarea
-                    type="review"
-                    name="review"
-                    value={review}
-                    onChange={(e) => setReview(e.target.value)}
-                />
-            </div>
-            <div className="rateContainer">Rate this instrument:
-                <select className="ratingSelect" onChange={(e) => setRating(e.target.value)}>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
-                </select>
-            </div>
-            <button type="submit">Submit your review</button>
-        </form>
-    )
+    if (!reviewData) {
+        return null;
+    } else {
+        return (
+            <form className="newReviewForm" onSubmit={onSubmit}>
+                <div className="reviewTextContainer"> Write your review:
+                    <textarea
+                        type="review"
+                        name="review"
+                        value={review}
+                        onChange={(e) => setReview(e.target.value)}
+                    />
+                </div>
+                <div className="rateContainer">Rate this instrument:
+                    <select className="ratingSelect" defaultValue={reviewData.rating}  onChange={(e) => setRating(e.target.value)}>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                    </select>
+                </div>
+                <button type="submit">Submit your review</button>
+            </form>
+        )
+    }
 }
 
 export default EditReviewForm;
