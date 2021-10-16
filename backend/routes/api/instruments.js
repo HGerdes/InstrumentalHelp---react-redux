@@ -43,7 +43,6 @@ router.patch("/:id/edit", requireAuth, restoreUser, asyncHandler(async(req, res)
     let {id} = req.params
     const instrumentEdit = await Instrument.findByPk(id)
     const instrument = req.body;
-    console.log("reqbody===============", req.body)
     await instrumentEdit.update(instrument);
     return res.json(instrumentEdit)
 }));
