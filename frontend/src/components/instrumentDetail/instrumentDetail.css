@@ -1,0 +1,58 @@
+.instDetContainer {
+    display: flex;
+    margin-left: 30%;
+    margin-right: 30%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detContainer {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.instrumentPic {
+    display: flex;
+    width: 350px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.instrumentDetName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+
+.instrumentDetManufacturer {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+}
+
+.instrumentDetType {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.hr {
+    height: 5px;
+    width: 1000px;
+    border: 1px solid rgb(189, 189, 189);
+    margin-top: 15px;
+}
+
+.aboutTheBz{
+    text-align: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.instrumentDetDesc {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 17px;
+    margin-bottom: 10px;
+}

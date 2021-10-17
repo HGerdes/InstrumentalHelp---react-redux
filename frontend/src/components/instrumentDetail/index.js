@@ -5,7 +5,7 @@ import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 import { getReviewsForInstrument } from "../../store/reviews";
 import { deleteReview } from '../../store/reviews';
-import InstrumentsPage from '../InstrumentPage/Instruments';
+import "./instrumentDetail.css";
 
 const InstrumentDetailPage = () => {
     const dispatch = useDispatch();
@@ -93,12 +93,23 @@ const InstrumentDetailPage = () => {
     // console.log(avg)
 
     return (
-        <div className="Instrument Details">
-            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
-            <div className="instrumentManufacturer">Instrument Manufacturer: {manufact}</div>
-            <div className="instrumentType">Instrument Type: {type}</div>
-            <div className="instrumentName">Instrument Description: {instrumentDetail?.description}</div>
-            <div className="editFormButton">
+        <>
+        <div className="InstrumentDetails">
+            <div className="instDetContainer">
+                <img className="instrumentPic" src={instrumentDetail?.imageSrc}></img>
+                <div className="detContainer">
+                    <div className="instrumentDetName">{instrumentDetail?.name}</div>
+                    <div className="instrumentDetManufacturer">By: {manufact}</div>
+                    <div className="instrumentDetType">{type}</div>
+                    <div className="hr"></div>
+                    <div className="descContainer">
+                        <h3 className="aboutTheBz">About the Instrument</h3>
+                        <div className="instrumentDetDesc">{instrumentDetail?.description}</div>
+                    </div>
+                    <div className="hr"></div>
+                </div>
+            </div>
+                <div className="editFormButton">
                 {(showEditForm) && (
                     <div className="buttons">
                         <NavLink to={`/instruments/${uniqueInstrumentId}/edit`}>
@@ -134,6 +145,7 @@ const InstrumentDetailPage = () => {
                 )))}
             </div>
         </div>
+        </>
     )
 }
 

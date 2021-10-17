@@ -51,9 +51,9 @@ const InstrumentsPage = () => {
     } else {
     return (
         <>
-        <div className="createInstrumentButton">
+        <div className="createInstrumentButtonContainer">
             <NavLink to="/instruments/new">
-                <button>Create an Instrument</button>
+                <button className="createInstrumentButton">Post an Instrument</button>
             </NavLink>
         </div>
         <div className="instruments-container">
@@ -63,8 +63,13 @@ const InstrumentsPage = () => {
                         <NavLink to={`/instruments/${instrument?.id}`} key={`${instrument?.id}`} className="instrumentLinks">
                             <div className="instrumentContainer">
                                 <img className="instrumentImage" src={instrument?.imageSrc} ></img>
-                                <div className="instrumentName">{instrument?.id}. {instrument?.name}</div>
-                                <div className="instrumentAvg">{avg[instrument?.id]}</div>
+                                <div className="nameAvgContainer">
+                                    <div className="instrumentName">{instrument?.name}</div>
+                                    <div className="scoreTextAvgContainer">
+                                        <div className="avgScoreText">Average Review Score:</div>
+                                        <div className="instrumentAvg">{avg[instrument?.id]}</div>
+                                    </div>
+                                </div>
                             </div>
                         </NavLink>
                     </div>
