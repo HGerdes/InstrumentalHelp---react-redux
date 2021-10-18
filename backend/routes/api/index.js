@@ -7,13 +7,10 @@ const manufacturerRouter = require("./instruments.js")
 const reviewRouter = require("./reviews.js")
 
 router.use("/reviews", reviewRouter);
-
 router.use("/instruments", instrumentRouter);
 router.use("/type", instrumentTypeRouter);
 router.use("/manufacturer", manufacturerRouter);
-
 router.use('/session', sessionRouter);
-
 router.use('/users', usersRouter);
 
 router.post('/test', (req, res) => {

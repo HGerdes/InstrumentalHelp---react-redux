@@ -1,9 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
-
+const { User, Instrument, Review } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -43,4 +41,28 @@ const validateSignup = [
       });
     }),
   );
+
+router.get("/:id/reviews", asyncHandler(async(req, res) => {
+  const userId = req.params.id;
+  const comments = await Review.findAll({
+    where: {
+      userId
+    },
+    include: User
+  });
+  return res.json(comments)
+}));
+
+router.get("/", asyncHandler(async(req, res) => {
+  const user = await User.findAll();
+  return res.json(user)
+}));
+
+router.get("/:id", asyncHandler(async(req, res) => {
+  const userId = req.params.id;
+  const user = await User.getCurrentUserById(userId)
+  return res.json(user)
+}));
+
+
 module.exports = router;

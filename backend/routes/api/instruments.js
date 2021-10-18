@@ -2,12 +2,15 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const { requireAuth, restoreUser } = require("../../utils/auth")
 const {Instrument, InstrumentType, Manufacturer} = require("../../db/models")
-
+const {Review} = require("../../db/models")
 
 const router = express.Router();
 
 router.get("/", asyncHandler(async function(req, res) {
-    const instruments = await Instrument.findAll();
+    const instruments = await Instrument.findAll({
+            include: Review
+        }
+    );
     return res.json(instruments)
 }));
 
@@ -43,7 +46,6 @@ router.patch("/:id/edit", requireAuth, restoreUser, asyncHandler(async(req, res)
     let {id} = req.params
     const instrumentEdit = await Instrument.findByPk(id)
     const instrument = req.body;
-    console.log("reqbody===============", req.body)
     await instrumentEdit.update(instrument);
     return res.json(instrumentEdit)
 }));

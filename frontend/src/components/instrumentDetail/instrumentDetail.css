@@ -1,0 +1,284 @@
+* {
+    box-sizing: border-box;
+}
+
+.siteContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.InstrumentDetails {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 30%;
+    margin-right: auto;
+    height: auto;
+    width: 515px;
+    justify-content: center;
+}
+
+
+.instDetContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.detContainer {
+    flex-direction: column;
+    text-align: center;
+}
+
+.instrumentPic {
+    display: flex;
+    width: 350px;
+    height: auto;
+    border-radius: 4px;
+}
+
+.instrumentDetName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+}
+
+.instrumentDetManufacturer {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+}
+
+.instrumentDetType {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.hr {
+    height: 1px;
+    width: 800px;
+    border: 1px solid rgb(189, 189, 189);
+}
+
+.aboutTheInst{
+    text-align: left;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.instrumentDetDesc {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 17px;
+    margin-bottom: 20px;
+    width: 800px;
+}
+
+.editAndDelBtnContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.editAndDelButtonContainer {
+    height: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.reviewButton {
+    height: auto;
+    margin-top: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.editInstBtn {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 70px;
+}
+
+.delInstBtn {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 70px;
+}
+
+.reviewBtn {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 70px;
+}
+
+.reviewBtn::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reviewBtn:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.reviewBtn:hover::after {
+    opacity: 1;
+}
+
+.editAndDelBtnContainer > *{
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.editAndDelBtnContainer > *::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.editAndDelBtnContainer > *:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.editAndDelBtnContainer > *:hover::after {
+    opacity: 1;
+}
+
+.reviewContainer {
+    height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.reviewDetContainer {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    word-wrap: break-word;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+.recentReviews {
+    font-family: "Candara";
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.reviewAuthor {
+    font-family: "Verdana";
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 5px;
+    color: rgb(61, 61, 61);
+}
+
+
+.reviewRating {
+    font-family: "Sitka";
+    font-weight: bold;
+    text-align: right;
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: rgb(61, 61, 61);
+}
+
+.reviewText {
+    font-family: "Segoe UI";
+}
+
+.hrReview {
+    height: 1px;
+    width: 800px;
+    border: 1px solid rgba(218, 218, 218, 0.52);
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
+.editBtnContainer {
+    gap: 10px;
+}
+
+.edtRevBtn {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 20px;
+    width: 50px;
+    margin-left: 20px;
+    padding-bottom: 20px;
+}
+
+.edtRevBtn::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.edtRevBtn:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.edtRevBtn:hover::after {
+    opacity: 1;
+}
+
+.delRevBtb {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 20px;
+    width: 80px;
+    margin-left:20px;
+    margin-top: 5px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.delRevBtb::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.delRevBtb:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.delRevBtb:hover::after {
+    opacity: 1;
+}

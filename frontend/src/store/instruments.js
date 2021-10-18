@@ -98,13 +98,11 @@ export const createInstrument = (instrument) => async dispatch => {
 }
 
 export const editSingleInstrument = (instrument) => async dispatch => {
-    console.log("instrument:   ", instrument)
     const response = await csrfFetch(`/api/instruments/${instrument.id}/edit`, {
         method: "PATCH",
         body: JSON.stringify(instrument)
 
     });
-    console.log("response:   ", response)
     if (response.ok) {
         const data = await response.json();
         dispatch(editInstrument(data))
@@ -123,8 +121,6 @@ export const deleteInstrument = (id) => async dispatch => {
     }
 }
 
-
-
 const initialState = {};
 
 const instrumentReducer = (state = initialState, action) => {
@@ -137,7 +133,7 @@ const instrumentReducer = (state = initialState, action) => {
         }
 
         case LOAD_ONE_INSTRUMENT: {
-            return {
+                return {
                 ...state,
                 getInstrumentDetail: action.getInstrumentDetail
             }

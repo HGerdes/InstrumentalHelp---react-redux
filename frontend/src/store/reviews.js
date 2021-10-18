@@ -41,7 +41,7 @@ export const getReviews = () => async dispatch => {
     }
 }
 
-export const getReviewsForInstrument = (id) => async (dispatch) => {
+export const getReviewsForInstrument = (id) => async dispatch => {
     const response = await fetch(`/api/reviews/${id}`);
 
     if (response.ok) {
@@ -69,8 +69,6 @@ export const getSingleReview = (id) => async dispatch => {
     if (response.ok) {
         const data = await response.json();
         dispatch(loadOneReview(data))
-    console.log("::::::::response::::::", data)
-
         return data;
     }
 }

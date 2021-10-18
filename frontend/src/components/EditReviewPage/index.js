@@ -3,45 +3,46 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { editSingleReview } from "../../store/reviews";
 import { getSingleReview } from "../../store/reviews";
-import { useParams } from "react-router-dom";
 
 const EditReviewForm = () => {
-    const {reviewContent} = useParams();
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.session.user);
     const history = useHistory();
     const {pathname} = history.location;
     const id = parseInt(pathname.split("/")[2]);
-    console.log("pathname...:::::", id)
-
-    let reText;
-    let reRating;
 
     const reviewData = useSelector(state => {
         return state.reviews.loadOneReview
     })
 
-    // if (reviewData) {
-    //     reText = reviewData.review;
-    //     reRating = reviewData.rating;
-    // } else {
-    //     reText = "no good";
-    //     reRating = 1;
-    // }
-
-    const [rating, setRating] = useState(reviewData?.review || "");
-    const [review, setReview] = useState();
+    // const [rating, setRating] = useState(reviewData?.review || "");
+    const [rating, setRating] = useState(1);
+    const [review, setReview] = useState("");
     const [errors, setErrors] = useState([]);
 
 
     useEffect(() => {
         dispatch(getSingleReview(id));
-    },[dispatch])
+    },[dispatch, id])
 
     let userId;
     if (currentUser) {
         userId = currentUser.id;
     }
+
+    useEffect(() => {
+        const errors = [];
+
+        if (review.length < 10) {
+            errors.push("Write a little more for your review")
+        }
+
+        if (review.length > 255) {
+            errors.push("Please shorten your review (255 characters max)")
+        }
+
+        setErrors(errors)
+    },[review])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -54,7 +55,6 @@ const EditReviewForm = () => {
             unhelpful: 0,
             review
         };
-
         let editedReview = await dispatch(editSingleReview(payload, id));
         history.push(`/instruments/${editedReview.instrumentId}`)
     }
@@ -64,6 +64,11 @@ const EditReviewForm = () => {
     } else {
         return (
             <form className="newReviewForm" onSubmit={onSubmit}>
+                <ul className="errors">
+                {errors.map(error => (
+                <li key={error}>{error}</li>
+                ))}
+            </ul>
                 <div className="reviewTextContainer"> Write your review:
                     <textarea
                         type="review"
@@ -81,7 +86,7 @@ const EditReviewForm = () => {
                         <option value={5}>5</option>
                     </select>
                 </div>
-                <button type="submit">Submit your review</button>
+                <button disabled={ errors.length > 0 } type="submit">Submit your review</button>
             </form>
         )
     }

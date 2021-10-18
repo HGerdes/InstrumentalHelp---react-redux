@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     manufacturerId: DataTypes.INTEGER,
     typeId: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    description: DataTypes.TEXT
+    description: DataTypes.TEXT,
+    imageSrc: DataTypes.TEXT
+
   }, {});
   Instrument.associate = function(models) {
     Instrument.hasMany(models.Review, {

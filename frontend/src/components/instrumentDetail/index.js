@@ -1,25 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams, NavLink } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 import { getReviewsForInstrument } from "../../store/reviews";
 import { deleteReview } from '../../store/reviews';
+import "./instrumentDetail.css";
 
 const InstrumentDetailPage = () => {
     const dispatch = useDispatch();
-    const {instrumentId} = useParams();
     const history = useHistory();
 
-    const {pathname} = history.location
-    const uniqueInstrumentId = pathname.split("/")[2]
+    const {pathname} = history.location;
+    const uniqueInstrumentId = pathname.split("/")[2];
 
     const currentUser = useSelector(state => state.session.user);
 
-    let userId;
-    if (currentUser) {
-        userId = currentUser.id;
-    }
+
+
 
     const reviews = useSelector(state => {
         return state.reviews.getAllReviews
@@ -27,7 +25,7 @@ const InstrumentDetailPage = () => {
 
     useEffect(() => {
         dispatch(getReviewsForInstrument(uniqueInstrumentId))
-    }, [dispatch])
+    }, [dispatch, uniqueInstrumentId])
 
     const instrumentDetail = useSelector(state => {
         return state.instruments.getInstrumentDetail;
@@ -61,7 +59,6 @@ const InstrumentDetailPage = () => {
     let type;
     let showEditForm;
     if (instrumentDetail) {
-
         if (manufacturerTypes) {
             const instManufacturer = (instrumentDetail.manufacturerId) - 1;
             manufact = manufacturerTypes[instManufacturer].name;
@@ -79,50 +76,71 @@ const InstrumentDetailPage = () => {
 
     useEffect(() => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
-    }, [dispatch])
+    }, [dispatch, uniqueInstrumentId])
 
     return (
-        <div className="Instrument Details">
-            <div className="instrumentName">Instrument Name: {instrumentDetail?.name}</div>
-            <div className="instrumentManufacturer">Instrument Manufacturer: {manufact}</div>
-            <div className="instrumentType">Instrument Type: {type}</div>
-            <div className="instrumentName">Instrument Description: {instrumentDetail?.description}</div>
-            <div className="editFormButton">
-                {(showEditForm) && (
-                    <div className="buttons">
-                        <NavLink to={`/instruments/${uniqueInstrumentId}/edit`}>
-                            <button>edit</button>
-                        </NavLink>
-
-                        <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
-                            <button>delete</button>
-                        </NavLink>
+        <>
+        <div className="siteContainer">
+            <div className="InstrumentDetails">
+                <div className="instDetContainer">
+                    <img className="instrumentPic" src={instrumentDetail?.imageSrc} alt=""></img>
+                    <div className="detContainer">
+                        <div className="instrumentDetName">{instrumentDetail?.name}</div>
+                        <div className="instrumentDetManufacturer">By: {manufact}</div>
+                        <div className="instrumentDetType">{type}</div>
                     </div>
-                )}
+                </div>
+                <div className="editAndDelButtonContainer">
+                    <div className="buttons">
+                    {showEditForm && (
+                        <div className="editAndDelBtnContainer">
+                            <NavLink  to={`/instruments/${uniqueInstrumentId}/edit`}>
+                            {currentUser && currentUser.id === Number(instrumentDetail?.userId) && (<button className="editInstBtn">edit</button>)}
+                            </NavLink>
+                            <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
+                            {currentUser && currentUser.id === Number(instrumentDetail?.userId) && (<button className="delInstBtn">delete</button>)}
+                            </NavLink>
+                        </div>
+                    )}
+                        <div className="reviewButton">
+                            <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
+                            {currentUser && (<button className="reviewBtn">review</button>)}
+                            </NavLink>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="hr" id="tophr"></div>
+                <div className="descContainer">
+                    <h3 className="aboutTheInst">About the Instrument</h3>
+                    <div className="instrumentDetDesc">{instrumentDetail?.description}</div>
+                </div>
+                <div className="hr" id="bottomhr"></div>
+
             </div>
-            <div className="reviewButton">
-                <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
-                    <button>review</button>
-                </NavLink>
-            </div>
-            <div className="reviews">
+            <div className="reviewContainer">
+            <div className="recentReviews">Recent Reviews</div>
+
                 {reviews?.map((review => (
                     <div key={review.id} className="review">
-                        <div className="reviewContainer">{review.review}
+                        <div className="reviewDetContainer">
+                            <div className="reviewAuthor">By: {review.User.username}</div>
                             <div className="reviewRating">Rating: {review.rating} out of 5 </div>
-                            <div className="reviewText">
-                                <NavLink to={`/reviews/${review.id}/edit`}>
-                                    <button>edit</button>
-                                </NavLink>
-                                {review.userId === userId ? (
-                                    <button onClick={() => deleteButton(review.id)}>delete</button>
-                                ) : null}
+                            <div className="reviewText">{review.review}
+                                <div className="editBtnContainer">
+                                    <NavLink to={`/reviews/${review.id}/edit`}>
+                                    {currentUser && currentUser.id === Number(review.userId) && (<button className="edtRevBtn">edit</button>)}
+                                    </NavLink>
+                                    {currentUser && currentUser.id === Number(review.userId) && (<button className="delRevBtb" onClick={() => deleteButton(review.id)}>delete</button>)}
+                                </div>
+                                <div className="hrReview" id="bottomhr"></div>
                             </div>
                         </div>
                     </div>
                 )))}
             </div>
         </div>
+        </>
     )
 }
 

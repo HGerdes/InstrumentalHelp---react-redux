@@ -3,12 +3,22 @@ import thunk from "redux-thunk";
 import sessionReducer from './session';
 import instrumentReducer from "./instruments";
 import reviewReducer from "./reviews";
+import userReducer from "./users";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   session: sessionReducer,
   instruments: instrumentReducer,
-  reviews: reviewReducer
+  reviews: reviewReducer,
+  users: userReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === "LOAD_ONE_INSTRUMENT") {
+    state = undefined;
+  }
+
+  return appReducer(state, action)
+}
 
 let enhancer;
 

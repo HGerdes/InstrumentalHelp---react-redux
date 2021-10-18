@@ -5,7 +5,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import Instruments from "./components/InstrumentPage"
+import Instruments from "./components/InstrumentPage/Instruments"
 import NewInstrument from "./components/CreateInstrumentPage"
 import InstrumentDetailPage from "./components/instrumentDetail";
 import EditInstrumentForm from "./components/EditInstrumentPage";
@@ -13,6 +13,7 @@ import DeleteInstrument from "./components/DeleteInstrumentPage";
 import CreateReviewForm from "./components/CreateReviewPage";
 import SingleReviewPage from "./components/SingleReviewPage";
 import EditReviewForm from "./components/EditReviewPage";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
           <Route path="/login">
             <LoginFormPage />
           </Route>
