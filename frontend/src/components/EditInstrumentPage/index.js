@@ -51,7 +51,7 @@ const EditInstrumentForm = () => {
         }
 
         if (!imageTypes.includes(imageExt)) {
-            errors.push("Must be valid image (png, jpg, jpeg, gif)"
+            errors.push("Must be valid image (png, jpg, jpeg, gif)");
         }
 
         setErrors(errors)
