@@ -11,7 +11,7 @@ const LandingPage = () => {
                 <NavLink className="signup" to="/signUp">Sign Up</NavLink>
             </div>
             <div className="Instruments">
-                <NavLink className="instruments" to="/instruments">Go review some instruments!</NavLink>
+                <NavLink className="instruments" to="/instruments">Click here to review some instruments!</NavLink>
             </div>
 
         </div>

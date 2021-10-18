@@ -1,6 +1,7 @@
 
 .landingContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
@@ -68,4 +69,11 @@
 
 .signup:hover::after {
     opacity: 1;
+}
+
+.instruments {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: blue;
 }
