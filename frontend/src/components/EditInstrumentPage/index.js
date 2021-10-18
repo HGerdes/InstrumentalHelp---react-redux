@@ -117,7 +117,7 @@ const EditInstrumentForm = () => {
                     onChange={(e) => setImageSrc(e.target.value)}
                 />
             </div>
-            <button type="submit">Submit Edited Instrument</button>
+            <button  disabled={ errors.length > 0 } type="submit">Submit Edited Instrument</button>
         </form>
     );
 }
