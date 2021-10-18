@@ -15,7 +15,7 @@ function LoginFormPage() {
     const history = useHistory();
 
     if (sessionUser) return (
-        <Redirect to="/" />
+        <Redirect to="/instruments" />
     );
 
     //prevents refresh, handles errors, tests if authenticated

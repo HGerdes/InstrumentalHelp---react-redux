@@ -1,20 +1,26 @@
 import { NavLink } from "react-router-dom";
-import "./LandingPage.css";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router";
 
 const LandingPage = () => {
+    const sessionUser = useSelector(state => state.session.user);
+
+    if (sessionUser) return (
+        <Redirect to="/instruments" />
+    );
+
+
     return (
         <div className="landingContainer">
             <div className="loginLink">
-                <NavLink className="login" to="/logIn">Log In</NavLink>
+                <NavLink to="/logIn">Log In</NavLink>
             </div>
             <div className="Sign Up">
-                <NavLink className="signup" to="/signUp">Sign Up</NavLink>
-            </div>
-            <div className="Instruments">
-                <NavLink className="instruments" to="/instruments">Click here to review some instruments!</NavLink>
+                <NavLink to="/signUp">Sign Up</NavLink>
             </div>
 
         </div>
+
     )
 }
 

@@ -15,8 +15,7 @@ function DeleteInstrument() {
 
     return (
         <form className="deleteInstrument" onSubmit={onSubmit}>
-            <button type="submit">delete????</button>
-            <div>yo test</div>
+            <button type="submit">confirm delete</button>
         </form>
     )
 }
