@@ -30,7 +30,7 @@ module.exports = {
         rating: 2,
         helpful: 0,
         unhelpful: 0,
-        review: "The best instrument I have ever played.  Would recommend to anyone who wants one.  Would rate a 6 if I could.",
+        review: "The best instrument I have ever played.  Would recommend to anyone who wants one.  I'd rate it a 6 if I could.",
         createdAt: new Date(),
         updatedAt: new Date()
       },

@@ -14,17 +14,12 @@ import CreateReviewForm from "./components/CreateReviewPage";
 import SingleReviewPage from "./components/SingleReviewPage";
 import EditReviewForm from "./components/EditReviewPage";
 import LandingPage from "./components/LandingPage";
-import { getUsers } from "./store/users";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getUsers());
   }, [dispatch]);
 
   return (

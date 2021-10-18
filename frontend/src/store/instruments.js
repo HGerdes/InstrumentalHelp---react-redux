@@ -135,7 +135,7 @@ const instrumentReducer = (state = initialState, action) => {
         }
 
         case LOAD_ONE_INSTRUMENT: {
-            return {
+                return {
                 ...state,
                 getInstrumentDetail: action.getInstrumentDetail
             }

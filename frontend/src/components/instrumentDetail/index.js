@@ -5,7 +5,6 @@ import { getInstrumentDetail } from "../../store/instruments"
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 import { getReviewsForInstrument } from "../../store/reviews";
 import { deleteReview } from '../../store/reviews';
-import { getUsers } from '../../store/users';
 import "./instrumentDetail.css";
 
 const InstrumentDetailPage = () => {
@@ -15,10 +14,10 @@ const InstrumentDetailPage = () => {
     const {pathname} = history.location;
     const uniqueInstrumentId = pathname.split("/")[2];
 
-    const currentUser = useSelector(state => state.session.users);
+    const currentUser = useSelector(state => state.session.user);
 
-    // const user = useSelector((store) => store.userReducer.reviewers);
 
+    console.log(currentUser)
     let userId;
     if (currentUser) {
         userId = currentUser.id;
@@ -29,24 +28,6 @@ const InstrumentDetailPage = () => {
     })
 
     const reviewers = useSelector(state => state.users.reviewers)
-
-    // if (reviews) {
-    //     const map = reviews?.map((review => {
-    //         console.log("review:", review)
-    //         const person = review?.userId;
-    //         console.log("reviewers", reviewers)
-    //         if (reviewers) {
-    //             Object.values(reviewers).find(reviewer => reviewer?.id === person)
-    //         reviewers ? Object.values(reviewers).find(reviewer => reviewer?.id.id === review?.userId) : ""
-    //         }
-    //     }))
-    //     console.log("MAP",map)
-    // }
-
-    useEffect(() => {
-        dispatch(getUsers())
-    }, [dispatch])
-
 
     useEffect(() => {
         dispatch(getReviewsForInstrument(uniqueInstrumentId))
@@ -83,8 +64,9 @@ const InstrumentDetailPage = () => {
     let manufact;
     let type;
     let showEditForm;
+    let showCommentEditForm;
     if (instrumentDetail) {
-
+        console.log(instrumentDetail)
         if (manufacturerTypes) {
             const instManufacturer = (instrumentDetail.manufacturerId) - 1;
             manufact = manufacturerTypes[instManufacturer].name;
@@ -99,6 +81,11 @@ const InstrumentDetailPage = () => {
             showEditForm = true;
         }
     }
+
+    if (currentUser)
+    console.log(currentUser.id)
+
+
 
     useEffect(() => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
@@ -117,22 +104,24 @@ const InstrumentDetailPage = () => {
                     </div>
                 </div>
                 <div className="editAndDelButtonContainer">
-            {(showEditForm) && (
-                <div className="buttons">
-                    <div className="editAndDelBtnContainer">
-                        <NavLink  to={`/instruments/${uniqueInstrumentId}/edit`}>
-                            <button className="editInstBtn">edit</button>
-                        </NavLink>
-                        <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
-                            <button className="delInstBtn">delete</button>
-                        </NavLink>
+                    <div className="buttons">
+                    {showEditForm && (
+                        <div className="editAndDelBtnContainer">
+                            <NavLink  to={`/instruments/${uniqueInstrumentId}/edit`}>
+                            {currentUser && currentUser.id === Number(instrumentDetail?.userId) && (<button className="editInstBtn">edit</button>)}
+                            </NavLink>
+                            <NavLink to={`/instruments/${uniqueInstrumentId}/delete`}>
+                            {currentUser && currentUser.id === Number(instrumentDetail?.userId) && (<button className="delInstBtn">delete</button>)}
+                            </NavLink>
+                        </div>
+                    )}
+                        <div className="reviewButton">
+                            <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
+                            {currentUser && (<button className="reviewBtn">review</button>)}
+                            </NavLink>
+                        </div>
                     </div>
-                    <NavLink to={`/reviews/${uniqueInstrumentId}/new`}>
-                        <button className="reviewBtn">review</button>
-                    </NavLink>
                 </div>
-                )}
-            </div>
 
                 <div className="hr" id="tophr"></div>
                 <div className="descContainer">
@@ -143,24 +132,21 @@ const InstrumentDetailPage = () => {
 
             </div>
             <div className="reviewContainer">
+            <div className="recentReviews">Recent Reviews</div>
+
                 {reviews?.map((review => (
                     <div key={review.id} className="review">
-                        <div className="reviewName">
-                            {
-                                reviewers ? Object.values(reviewers).find(reviewer => reviewer?.id.id === review?.userId) : ""
-
-                            }
-                        </div>
-                        <div className="reviewAuthor">{review.User.username}</div>
-                        <div className="reviewContainer">{review.review}
+                        <div className="reviewDetContainer">
+                            <div className="reviewAuthor">{review.User.username}</div>
                             <div className="reviewRating">Rating: {review.rating} out of 5 </div>
-                            <div className="reviewText">
+                            <div className="reviewText">{review.review}
+                                <div className="editBtnContainer">
                                 <NavLink to={`/reviews/${review.id}/edit`}>
-                                    <button>edit</button>
-                                </NavLink>
-                                {review.userId === userId ? (
-                                    <button onClick={() => deleteButton(review.id)}>delete</button>
-                                ) : null}
+                                {currentUser && currentUser.id === Number(review.userId) && (<button>edit</button>)}
+                                        </NavLink>{console.log("currentUser",currentUser)}
+                                        {currentUser && currentUser.id === Number(review.userId) && (<button onClick={() => deleteButton(review.id)}>delete</button>)}
+                                </div>
+                                <div className="hrReview" id="bottomhr"></div>
                             </div>
                         </div>
                     </div>

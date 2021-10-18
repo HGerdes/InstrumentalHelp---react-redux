@@ -59,7 +59,7 @@ const InstrumentsPage = () => {
         <div className="instruments-container">
             <div className="gridContainer">
                 {instruments?.map(instrument => (
-                        <div className="instrument" key={instrument?.id}>
+                    <div className="instrument" key={instrument?.id}>
                         <NavLink to={`/instruments/${instrument?.id}`} key={`${instrument?.id}`} className="instrumentLinks">
                             <div className="instrumentContainer">
                                 <img className="instrumentImage" src={instrument?.imageSrc} ></img>
@@ -78,7 +78,7 @@ const InstrumentsPage = () => {
         </div>
         </>
     )
-                }
+    }
 }
 
 export default InstrumentsPage;

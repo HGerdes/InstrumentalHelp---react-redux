@@ -1,0 +1,25 @@
+.home {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    height: 40px;
+    font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.home::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.home:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.home:hover::after {
+    opacity: 1;
+}

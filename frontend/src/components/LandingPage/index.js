@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/session"
+import "./LandingPage.css";
 
 const LandingPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -18,14 +19,13 @@ const LandingPage = () => {
     return (
         <div className="landingContainer">
             <div className="loginLink">
-                <NavLink to="/logIn">Log In</NavLink>
+                <NavLink className="login" to="/logIn">Log In</NavLink>
             </div>
             <div className="Sign Up">
-                <NavLink to="/signUp">Sign Up</NavLink>
+                <NavLink className="signup" to="/signUp">Sign Up</NavLink>
             </div>
-           
-        </div>
 
+        </div>
     )
 }
 
