@@ -15,7 +15,7 @@ const LandingPage = () => {
             <div className="loginLink">
                 <NavLink to="/logIn">Log In</NavLink>
             </div>
-            <div className="Sign Up">
+            <div className="signup">
                 <NavLink to="/signUp">Sign Up</NavLink>
             </div>
 
