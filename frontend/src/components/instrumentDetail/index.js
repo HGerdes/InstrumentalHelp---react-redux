@@ -17,17 +17,11 @@ const InstrumentDetailPage = () => {
     const currentUser = useSelector(state => state.session.user);
 
 
-    console.log(currentUser)
-    let userId;
-    if (currentUser) {
-        userId = currentUser.id;
-    }
+
 
     const reviews = useSelector(state => {
         return state.reviews.getAllReviews
     })
-
-    const reviewers = useSelector(state => state.users.reviewers)
 
     useEffect(() => {
         dispatch(getReviewsForInstrument(uniqueInstrumentId))
@@ -64,9 +58,7 @@ const InstrumentDetailPage = () => {
     let manufact;
     let type;
     let showEditForm;
-    let showCommentEditForm;
     if (instrumentDetail) {
-        console.log(instrumentDetail)
         if (manufacturerTypes) {
             const instManufacturer = (instrumentDetail.manufacturerId) - 1;
             manufact = manufacturerTypes[instManufacturer].name;
@@ -82,11 +74,6 @@ const InstrumentDetailPage = () => {
         }
     }
 
-    if (currentUser)
-    console.log(currentUser.id)
-
-
-
     useEffect(() => {
         dispatch(getInstrumentDetail(uniqueInstrumentId))
     }, [dispatch, uniqueInstrumentId])
@@ -96,7 +83,7 @@ const InstrumentDetailPage = () => {
         <div className="siteContainer">
             <div className="InstrumentDetails">
                 <div className="instDetContainer">
-                    <img className="instrumentPic" src={instrumentDetail?.imageSrc}></img>
+                    <img className="instrumentPic" src={instrumentDetail?.imageSrc} alt=""></img>
                     <div className="detContainer">
                         <div className="instrumentDetName">{instrumentDetail?.name}</div>
                         <div className="instrumentDetManufacturer">By: {manufact}</div>
@@ -137,14 +124,14 @@ const InstrumentDetailPage = () => {
                 {reviews?.map((review => (
                     <div key={review.id} className="review">
                         <div className="reviewDetContainer">
-                            <div className="reviewAuthor">{review.User.username}</div>
+                            <div className="reviewAuthor">By: {review.User.username}</div>
                             <div className="reviewRating">Rating: {review.rating} out of 5 </div>
                             <div className="reviewText">{review.review}
                                 <div className="editBtnContainer">
-                                <NavLink to={`/reviews/${review.id}/edit`}>
-                                {currentUser && currentUser.id === Number(review.userId) && (<button>edit</button>)}
-                                        </NavLink>{console.log("currentUser",currentUser)}
-                                        {currentUser && currentUser.id === Number(review.userId) && (<button onClick={() => deleteButton(review.id)}>delete</button>)}
+                                    <NavLink to={`/reviews/${review.id}/edit`}>
+                                    {currentUser && currentUser.id === Number(review.userId) && (<button className="edtRevBtn">edit</button>)}
+                                    </NavLink>
+                                    {currentUser && currentUser.id === Number(review.userId) && (<button className="delRevBtb" onClick={() => deleteButton(review.id)}>delete</button>)}
                                 </div>
                                 <div className="hrReview" id="bottomhr"></div>
                             </div>

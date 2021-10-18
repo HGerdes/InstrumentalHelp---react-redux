@@ -130,7 +130,7 @@ module.exports = {
         rating: 5,
         helpful: 0,
         unhelpful: 0,
-        review: "I was married stand on one of these for good luck.",
+        review: "I got married with one of these down my pants for good luck.",
         createdAt: new Date(),
         updatedAt: new Date()
       },

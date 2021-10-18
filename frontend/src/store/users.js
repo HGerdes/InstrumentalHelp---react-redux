@@ -15,10 +15,8 @@ const loadOneUser = getSingleUser => ({
 
 export const getUsers = () => async dispatch => {
     const response = await csrfFetch("/api/users");
-    console.log("::::::::::::", response)
     if (response.ok) {
         const users = await response.json();
-        console.log("::::::::::::", users)
         dispatch(loadUsers(users));
         return users;
     }

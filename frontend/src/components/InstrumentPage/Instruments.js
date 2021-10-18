@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom"
 import { getInstruments } from "../../store/instruments"
-import { getReviewsForInstrument } from "../../store/reviews";
 import './instrumentPage.css';
+import "./rpl.png";
 
 
 const InstrumentsPage = () => {
@@ -25,14 +24,12 @@ const InstrumentsPage = () => {
 
         if (instruments) {
             instruments.forEach(instrument => {
-                let avg;
                 let total = 0;
                 instrument["Reviews"].forEach(review => {
                     if (!review.rating) {
                         review.rating = 1;
                     }
                     total += review.rating;
-                    console.log(total)
                 })
                 ratings[instrument.id] = (total / Object.values(instrument["Reviews"]).length).toFixed(1);
             })
@@ -62,7 +59,7 @@ const InstrumentsPage = () => {
                     <div className="instrument" key={instrument?.id}>
                         <NavLink to={`/instruments/${instrument?.id}`} key={`${instrument?.id}`} className="instrumentLinks">
                             <div className="instrumentContainer">
-                                <img className="instrumentImage" src={instrument?.imageSrc} ></img>
+                                <img className="instrumentImage" src={instrument?.imageSrc} alt="" ></img>
                                 <div className="nameAvgContainer">
                                     <div className="instrumentName">{instrument?.name}</div>
                                     <div className="scoreTextAvgContainer">

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getInstrumentTypes, getInstrumentManufacturers } from "../../store/instruments"
 import { createInstrument } from "../../store/instruments";
-
+import "./createInstrumentPage.css"
 
 const CreateInstrumentForm = () => {
     const currentUser = useSelector((state) => state.session.user);
@@ -56,7 +56,7 @@ const CreateInstrumentForm = () => {
         }
 
         setErrors(errors)
-    },[name, imageSrc])
+    },[name, imageSrc, description])
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -70,56 +70,61 @@ const CreateInstrumentForm = () => {
             imageSrc
         };
 
-        let newInstrument = await dispatch(createInstrument(payload));
+        await dispatch(createInstrument(payload));
         history.push(`/instruments`);
 
     };
 
     return (
         <form className="newInstrumentForm" onSubmit={onSubmit}>
-            <ul className="errors">
-                {errors.map(error => (
-                    <li key={error}>{error}</li>
-                ))}
-            </ul>
-            <div>Name of Instrument:
-                <input
-                    type="name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+            <div className="formContainer">
+                <div className="ToI">Type of Instrument:
+                <ul className="errors">
+                    {errors.map(error => (
+                        <li key={error}>{error}</li>
+                    ))}
+                </ul>
+                <div>Name of Instrument:
+                    <input
+                        type="name"
+                        name="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+
+                        <select className="typeSelect" onChange={(e) => setType(e.target.value)}>
+                            {instrumentTypes?.map(type =>
+                                <option key={type.id} value={type.id}>{type.type}</option>
+                            )}
+                        </select>
+                    </div>
+                    <div>Instrument Manufacturer:
+                        <select className="typeSelect"  onChange={(e) => setManufacturer(e.target.value)} value={manufacturer}>
+                            {manufacturerTypes?.map(manufacturer =>
+                                <option key={manufacturer.id} value={manufacturer.id}>{manufacturer.name}</option>
+                            )}
+                        </select>
+                    </div>
+                    <div>Describe the instrument:
+                        <textarea
+                            name="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </div>
+                    <div> Image Source:
+                        <input
+                            type={"imageSrc"}
+                            name={"imageSrc"}
+                            value={imageSrc}
+                            onChange={(e) => setImageSrc(e.target.value)}
+                        />
+                    </div>
+                    <div class="subBut">
+                        <button disabled={ errors.length > 0 } type="submit">Submit New Instrument</button>
+                    </div>
             </div>
-            <div>Type of Instrument:
-                <select className="typeSelect" onChange={(e) => setType(e.target.value)}>
-                    {instrumentTypes?.map(type =>
-                        <option key={type.id} value={type.id}>{type.type}</option>
-                    )}
-                </select>
-            </div>
-            <div>Instrument Manufacturer:
-                <select className="typeSelect"  onChange={(e) => setManufacturer(e.target.value)} value={manufacturer}>
-                    {manufacturerTypes?.map(manufacturer =>
-                        <option key={manufacturer.id} value={manufacturer.id}>{manufacturer.name}</option>
-                    )}
-                </select>
-            </div>
-            <div>Describe the instrument:
-                <textarea
-                    name="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
-            <div> Image Source:
-                <input
-                    type={"imageSrc"}
-                    name={"imageSrc"}
-                    value={imageSrc}
-                    onChange={(e) => setImageSrc(e.target.value)}
-                />
-            </div>
-            <button type="submit">Submit New Instrument</button>
         </form>
     );
 }

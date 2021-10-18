@@ -169,7 +169,7 @@
 }
 
 .reviewContainer {
-    height: 600px;
+    height: 100vh;
     overflow: scroll;
     overflow-x: hidden;
 }
@@ -192,6 +192,7 @@
 
 .reviewAuthor {
     font-family: "Verdana";
+    font-size: 18px;
     font-weight: bold;
     text-align: right;
     margin-bottom: 5px;
@@ -218,4 +219,66 @@
     border: 1px solid rgba(218, 218, 218, 0.52);
     margin-top: 10px;
     margin-bottom: -10px;
+}
+
+.editBtnContainer {
+    gap: 10px;
+}
+
+.edtRevBtn {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 20px;
+    width: 50px;
+    margin-left: 20px;
+    padding-bottom: 20px;
+}
+
+.edtRevBtn::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.edtRevBtn:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.edtRevBtn:hover::after {
+    opacity: 1;
+}
+
+.delRevBtb {
+    background-color: white;
+    border: 1px rgb(163, 163, 163) solid;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 20px;
+    width: 80px;
+    margin-left:20px;
+    margin-top: 5px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.delRevBtb::after {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.delRevBtb:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: scale(1.25, 1.25);
+}
+
+.delRevBtb:hover::after {
+    opacity: 1;
 }
