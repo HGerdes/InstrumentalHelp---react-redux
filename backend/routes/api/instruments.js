@@ -8,11 +8,9 @@ const router = express.Router();
 
 router.get("/", asyncHandler(async function(req, res) {
     const instruments = await Instrument.findAll({
-        include: Review
-    }
-);
-
-
+            include: Review
+        }
+    );
     return res.json(instruments)
 }));
 

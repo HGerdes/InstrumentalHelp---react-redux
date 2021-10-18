@@ -31,7 +31,7 @@ function LoginFormPage() {
     const demoUserLogin = (e) => {
         e.preventDefault();
         dispatch(sessionActions.login({
-            credential: "horseMouth",
+            credential: "RondaldMacDondald",
             password: "password"
         }))
 
