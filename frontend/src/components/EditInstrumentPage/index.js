@@ -70,7 +70,7 @@ const EditInstrumentForm = () => {
         };
 
         await dispatch(editSingleInstrument(payload));
-        history.push(`/instruments`);
+        history.push(`/instruments/${id}`);
     };
 
     return (
