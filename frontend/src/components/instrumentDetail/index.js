@@ -16,9 +16,6 @@ const InstrumentDetailPage = () => {
 
     const currentUser = useSelector(state => state.session.user);
 
-
-
-
     const reviews = useSelector(state => {
         return state.reviews.getAllReviews
     })

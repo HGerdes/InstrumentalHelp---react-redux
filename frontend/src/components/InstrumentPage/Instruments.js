@@ -8,6 +8,7 @@ import "./rpl.png";
 
 const InstrumentsPage = () => {
     const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.session.user);
 
     useEffect(() => {
         dispatch(getInstruments())
@@ -50,7 +51,7 @@ const InstrumentsPage = () => {
         <>
         <div className="createInstrumentButtonContainer">
             <NavLink to="/instruments/new">
-                <button className="createInstrumentButton">Post an Instrument</button>
+            {currentUser && (<button className="createInstrumentButton">Post an Instrument</button>)}
             </NavLink>
         </div>
         <div className="instruments-container">
