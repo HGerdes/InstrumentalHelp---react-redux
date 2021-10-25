@@ -2,7 +2,7 @@
 
 InstrumentalHelp is a webapp inspired by Yelp that lets you view and review instruments.  The site is built with React / Redux.  
 
-You can use the app in all it's janky glory here at https://instrumentalhelp.herokuapp.com/.  
+You can use the app in all its janky glory here at https://instrumentalhelp.herokuapp.com/.  
 
 Features:
 
